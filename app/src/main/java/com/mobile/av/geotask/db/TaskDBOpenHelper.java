@@ -14,7 +14,7 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
     public static final int VERSION = 1;
 
     // Task table column constants
-    public static final String TASK_TABLE_NAME = "task";
+    public static final String TASK_TABLE_NAME = "Task";
     public static final String TASK_ID = "task_id";
     public static final String TASK_TITLE = "title";
     public static final String TASK_RANGE = "range";
