@@ -9,6 +9,7 @@ import java.util.Date;
  * Created by Anand on 4/8/2015.
  */
 public class Task {
+
     private int task_id;
     private String title;
     private ArrayList<Item> items;
