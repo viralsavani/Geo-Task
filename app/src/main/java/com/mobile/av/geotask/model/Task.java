@@ -3,7 +3,6 @@ package com.mobile.av.geotask.model;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Anand on 4/8/2015.
@@ -14,7 +13,9 @@ public class Task {
     private String title;
     private ArrayList<Item> items;
     private long range;
-    private Date expr_date;
+    private String expr_date;
+    private int repeat = 0;
+    private ArrayList<LatLng> location;
 
     public String getTitle() {
         return title;
@@ -23,9 +24,6 @@ public class Task {
     public void setTitle(String title) {
         this.title = title;
     }
-
-    private boolean repeat;
-    private ArrayList<LatLng> location;
 
     public int getTask_id() {
         return task_id;
@@ -51,19 +49,19 @@ public class Task {
         this.range = range;
     }
 
-    public Date getExpr_date() {
+    public String getExpr_date() {
         return expr_date;
     }
 
-    public void setExpr_date(Date expr_date) {
+    public void setExpr_date(String expr_date) {
         this.expr_date = expr_date;
     }
 
-    public boolean isRepeat() {
+    public int getRepeat() {
         return repeat;
     }
 
-    public void setRepeat(boolean repeat) {
+    public void setRepeat(int repeat) {
         this.repeat = repeat;
     }
 

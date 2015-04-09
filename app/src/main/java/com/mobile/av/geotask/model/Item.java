@@ -6,7 +6,7 @@ package com.mobile.av.geotask.model;
 public class Item {
 
     private int item_id;
-    private boolean status = false;
+    private int status = 0;
     private String name;
     private String note;
 
@@ -18,11 +18,11 @@ public class Item {
         this.item_id = item_id;
     }
 
-    public boolean isStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

@@ -14,7 +14,7 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
     public static final int VERSION = 1;
 
     // Task table column constants
-    public static final String TASK_TABLE_NAME = "Task";
+    public static final String TASK_TABLE_NAME = "task";
     public static final String TASK_ID = "task_id";
     public static final String TASK_TITLE = "title";
     public static final String TASK_RANGE = "range";
@@ -35,8 +35,8 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
                     TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TASK_TITLE + " TEXT, " +
                     TASK_RANGE + " NUMERIC, " +
-                    TASK_EXP_DATE + " DATE, " +
-                    TASK_REPEAT + " BOOLEAN, " +
+                    TASK_EXP_DATE + " TEXT, " +
+                    TASK_REPEAT + " INTEGER, " +
                     TASK_LOCATION + " TEXT " +
                     ")";
 
@@ -44,7 +44,7 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + ITEMS_TABLE_NAME + " (" +
                     ITEMS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TASK_ID + " INTEGER, " +
-                    ITEMS_STATUS + " BOOLEAN, " +
+                    ITEMS_STATUS + " INTEGER, " +
                     ITEMS_NAME + " TEXT, " +
                     ITEMS_NOTE + " TEXT, " +
                     "FOREIGN KEY(" + TASK_ID + ") REFERENCES " + TASK_TABLE_NAME + "(" + TASK_ID + ") " +
