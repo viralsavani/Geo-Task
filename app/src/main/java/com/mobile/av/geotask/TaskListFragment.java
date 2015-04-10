@@ -30,6 +30,9 @@ public class TaskListFragment extends ListFragment {
         dataSource = new TaskDataSource(getActivity());
         dataSource.open();
 
+        // set initial data TEST
+        //dataSource.setAllData(InitialData.initTask());
+
         tasks = dataSource.getAllFromTask();
 
         ArrayAdapter<Task> arrayAdapter = new ArrayAdapter<>(getActivity(),

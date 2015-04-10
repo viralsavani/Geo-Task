@@ -1,10 +1,13 @@
 package com.mobile.av.geotask.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.mobile.av.geotask.model.Item;
 import com.mobile.av.geotask.model.Task;
 
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ public class TaskDataSource {
     }
 
     /*
-    Return List of all Task
+    Return List of all Task ------------ TEST TO POPULATE LIST INITIAL
      */
     public List<Task> getAllFromTask() {
         Cursor cursor = taskDB.query(TaskDBOpenHelper.TASK_TABLE_NAME, task_All_Column, null, null, null, null, null);
@@ -73,5 +76,41 @@ public class TaskDataSource {
             }
         }
         return tasks;
+    }
+
+    /*
+    insert all data ----------------- DELETE THIS --------- TEST TO INSERT DATA INTO DATABASE
+     */
+    public void setAllData(List<Task> tasks) {
+        ContentValues values;
+        for (Task task : tasks) {
+            values = new ContentValues();
+
+            values.put(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
+            values.put(TaskDBOpenHelper.TASK_RANGE, task.getRange());
+            values.put(TaskDBOpenHelper.TASK_EXP_DATE, task.getExpr_date());
+            values.put(TaskDBOpenHelper.TASK_REPEAT, task.getRepeat());
+
+            ArrayList<LatLng> latLngs = task.getLocation();
+            StringBuilder sb = new StringBuilder();
+            for (LatLng latLng : latLngs) {
+                sb.append(latLng.toString() + ";");
+            }
+            values.put(TaskDBOpenHelper.TASK_LOCATION, sb.toString());
+
+            long insertID = taskDB.insert(TaskDBOpenHelper.TASK_TABLE_NAME, null, values);
+
+            ArrayList<Item> items = task.getItems();
+            for(Item item: items) {
+                values = new ContentValues();
+
+                values.put(TaskDBOpenHelper.TASK_ID, insertID);
+                values.put(TaskDBOpenHelper.ITEMS_STATUS, item.getStatus());
+                values.put(TaskDBOpenHelper.ITEMS_NAME, item.getName());
+                values.put(TaskDBOpenHelper.ITEMS_NOTE, item.getNote());
+
+                taskDB.insert(TaskDBOpenHelper.ITEMS_TABLE_NAME, null, values);
+            }
+        }
     }
 }
