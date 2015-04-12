@@ -1,5 +1,6 @@
 package com.mobile.av.geotask;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,7 +28,8 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            return true;
+            Intent prefsIntent = new Intent(this,PrefsActivity.class);
+            startActivity(prefsIntent);
         }
 
         return super.onOptionsItemSelected(item);
