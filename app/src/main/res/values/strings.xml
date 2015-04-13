@@ -3,4 +3,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="default_title">THIS IS TITLE</string>
+    <string name="default_range">999999 mts</string>
+    <string name="default_expiration_date">88/88/8888</string>
+    <string name="default_repeat">YES</string>
+    <string name="label_range">RANGE</string>
 </resources>
