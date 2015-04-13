@@ -22,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
         setTitle(Html.fromHtml("<font color='#12cdc2'> Tasks </font>"));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
+        actionBar.setElevation(10);
     }
 
 

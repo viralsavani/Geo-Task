@@ -67,6 +67,7 @@ public class TaskDataSource {
             Task task;
             while (cursor.moveToNext()) {
                 task = new Task();
+                task.setTask_id(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_ID)));
                 task.setTitle(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_TITLE)));
                 task.setRange(cursor.getLong(cursor.getColumnIndex(TaskDBOpenHelper.TASK_RANGE)));
                 task.setExpr_date(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_EXP_DATE)));
@@ -79,7 +80,7 @@ public class TaskDataSource {
     }
 
     /*
-    insert all data ----------------- DELETE THIS --------- TEST TO INSERT DATA INTO DATABASE
+    insert all data ------------- TEST TO INSERT DATA INTO DATABASE
      */
     public void setAllData(List<Task> tasks) {
         ContentValues values;

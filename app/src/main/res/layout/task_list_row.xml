@@ -3,10 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/task_list_bg"
-    android:elevation="@dimen/custom_row_margin"
     android:paddingLeft="@dimen/custom_row_margin"
-    android:paddingTop="@dimen/custom_row_margin"
-    android:translationZ="@dimen/custom_row_margin">
+    android:paddingTop="@dimen/custom_row_margin">
 
     <TextView
         android:id="@+id/taskTitle_textView_task_row_list"
@@ -68,7 +66,7 @@
         android:paddingBottom="@dimen/custom_row_margin"/>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/discardTask_imageView_task_row_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -76,6 +74,5 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_action_discard"
         android:padding="@dimen/custom_list_padding"/>
-
 
 </RelativeLayout>
