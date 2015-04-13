@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
+import com.mobile.av.geotask.adapters.TaskListRowAdapter;
 import com.mobile.av.geotask.db.TaskDataSource;
 import com.mobile.av.geotask.model.Task;
 
@@ -31,13 +31,14 @@ public class TaskListFragment extends ListFragment {
         dataSource.open();
 
         // set initial data TEST
-        //dataSource.setAllData(InitialData.initTask());
+//        dataSource.setAllData(InitialData.initTask());
 
         tasks = dataSource.getAllFromTask();
 
-        ArrayAdapter<Task> arrayAdapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_1, tasks);
-        setListAdapter(arrayAdapter);
+//        Custom Array Adapter
+        TaskListRowAdapter adapter = new TaskListRowAdapter(getActivity().getApplicationContext(), tasks);
+        setListAdapter(adapter);
+
 
         dataSource.close();
     }
