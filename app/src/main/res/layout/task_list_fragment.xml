@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="#FFFFFF"
-        android:dividerHeight="@dimen/custom_list_padding_between_listItems"/>
+        android:dividerHeight="@dimen/custom_list_padding_between_listItems"
+        android:elevation="@dimen/custom_row_margin" />
 
 </RelativeLayout>
