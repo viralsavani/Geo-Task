@@ -1,100 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/task_list_bg"
-    android:elevation="10dp"
-    android:translationZ="10dp"
-    android:paddingLeft="10dp"
-    android:paddingTop="10dp">
+    android:elevation="@dimen/custom_row_margin"
+    android:paddingLeft="@dimen/custom_row_margin"
+    android:paddingTop="@dimen/custom_row_margin"
+    android:translationZ="@dimen/custom_row_margin">
 
     <TextView
-        android:layout_marginLeft="@dimen/custom_list_padding"
+        android:id="@+id/taskTitle_textView_task_row_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/default_title"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif"
-        android:maxWidth="250dp"
-        android:textColor="#ffffff"
-        android:id="@+id/taskTitle_textView_task_row_list"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/custom_list_padding"
+        android:fontFamily="sans-serif"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
     <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/taskTitle_textView_task_row_list"
         android:layout_alignLeft="@+id/taskTitle_textView_task_row_list"
         android:layout_alignStart="@+id/taskTitle_textView_task_row_list"
-        android:id="@+id/gridLayout">
+        android:layout_below="@+id/taskTitle_textView_task_row_list">
 
         <TextView
-            android:layout_width="85dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/default_expiration_date"
-            android:textColor="#ffffff"
             android:id="@+id/expires_date_textView_task_row_list"
-            android:layout_row="1"
-            android:layout_column="1"
-            />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/default_repeat"
-            android:textColor="#ffffff"
-            android:id="@+id/repeat_textView_task_row_list"
+            android:layout_column="1"
             android:layout_row="1"
-            android:layout_column="3" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#ffffff" />
 
         <TextView
+            android:id="@+id/repeat_textView_task_row_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_row="1"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/repeat_label_task_row_list"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:text=""
-            android:background="@mipmap/ic_action_repeat"
-            android:id="@+id/repeat_label_task_row_list"
+            android:layout_column="2"
             android:layout_marginLeft="25dp"
             android:layout_marginStart="25dp"
             android:layout_row="1"
-            android:layout_column="2" />
+            android:background="@mipmap/ic_action_repeat" />
     </GridLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label_range"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
-        android:id="@+id/range_label_task_row_list"
-        android:layout_below="@+id/gridLayout"
-        android:layout_alignLeft="@+id/gridLayout"
-        android:layout_alignStart="@+id/gridLayout" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_range"
-        android:textColor="#ffffff"
         android:id="@+id/range_textView_task_row_list"
-        android:layout_alignTop="@+id/range_label_task_row_list"
-        android:layout_toRightOf="@+id/range_label_task_row_list"
-        android:layout_toEndOf="@+id/range_label_task_row_list"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gridLayout"
+        android:layout_alignStart="@+id/gridLayout"
+        android:layout_below="@+id/gridLayout"
+        android:textColor="#ffffff"
+        android:paddingBottom="@dimen/custom_row_margin"/>
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/ic_action_discard"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_action_discard"
+        android:padding="@dimen/custom_list_padding"/>
 
 
 </RelativeLayout>

@@ -38,8 +38,8 @@ public class TaskListRowAdapter extends BaseAdapter {
 
     @Override
     public Task getItem(int position) {
-        if(position >= taskList.size() || position < 0){
-            throw new ArrayIndexOutOfBoundsException("<---INDEX FOUND "+position+"--->");
+        if (position >= taskList.size() || position < 0) {
+            throw new ArrayIndexOutOfBoundsException("<---INDEX FOUND " + position + "--->");
         }
         return taskList.get(position);
     }
@@ -61,11 +61,11 @@ public class TaskListRowAdapter extends BaseAdapter {
 
         taskTitle.setText(taskList.get(position).getTitle());
         expirationDate.setText(taskList.get(position).getExpr_date());
-        range.setText(String.valueOf(taskList.get(position).getRange())+" mts");
+        range.setText("Range " + String.valueOf(taskList.get(position).getRange()) + " mts");
 
-        if(taskList.get(position).getRepeat() == 1){
+        if (taskList.get(position).getRepeat() == 1) {
             repeat.setText("YES");
-        }else{
+        } else {
             repeat.setText("NO");
         }
 

@@ -31,14 +31,13 @@ public class TaskListFragment extends ListFragment {
         dataSource.open();
 
         // set initial data TEST
-//        dataSource.setAllData(InitialData.initTask());
+        //dataSource.setAllData(InitialData.initTask());
 
         tasks = dataSource.getAllFromTask();
 
-//        Custom Array Adapter
+        //Custom Array Adapter
         TaskListRowAdapter adapter = new TaskListRowAdapter(getActivity().getApplicationContext(), tasks);
         setListAdapter(adapter);
-
 
         dataSource.close();
     }
