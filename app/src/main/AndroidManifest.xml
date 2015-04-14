@@ -36,8 +36,11 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="" />
 
-        <activity android:name=".PrefsActivity"/>
-
+        <activity android:name=".PrefsActivity" />
+        <activity
+            android:name=".TaskDetailActivity"
+            android:label="@string/title_activity_task_detail" >
+        </activity>
     </application>
 
 </manifest>

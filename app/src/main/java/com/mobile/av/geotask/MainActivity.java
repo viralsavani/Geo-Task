@@ -11,7 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements TaskListFragment.OnListItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +42,12 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(int position, Bundle taskDetails) {
+        Intent listItemClickIntent = new Intent(MainActivity.this, TaskDetailActivity.class);
+        listItemClickIntent.putExtras(taskDetails);
+        startActivity(listItemClickIntent);
     }
 }
