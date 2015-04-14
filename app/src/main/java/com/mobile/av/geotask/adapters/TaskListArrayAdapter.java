@@ -2,15 +2,17 @@ package com.mobile.av.geotask.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mobile.av.geotask.R;
+import com.mobile.av.geotask.RemoveTaskDialogFragment;
+import com.mobile.av.geotask.db.TaskDBOpenHelper;
 import com.mobile.av.geotask.model.Task;
 
 import java.util.List;
@@ -18,10 +20,15 @@ import java.util.List;
 /**
  * Created by VIRAL on 4/12/2015.
  */
-public class TaskListArrayAdapter extends ArrayAdapter<Task> {
+public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTaskDialogFragment.Listener {
+
+    public static final String REMOVE_DIALOG = "removeDialog";
+    public static final String POSITION = "position";
 
     private Context context;
     private List<Task> taskList;
+    private RemoveTaskDialogFragment removeDialog;
+    private Bundle bundle;
 
     public TaskListArrayAdapter(Context context, int resource, List<Task> taskList) {
         super(context, resource, taskList);
@@ -53,12 +60,37 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> {
         discardTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskList.remove(position);
-                notifyDataSetChanged();
-                Toast.makeText(context, "Test " + position, Toast.LENGTH_SHORT).show();
+                showRemoveDialog(position);
             }
         });
 
         return convertView;
+    }
+
+    /*
+    Method to handle user input onClick
+     */
+    public void showRemoveDialog(int position){
+        removeDialog = new RemoveTaskDialogFragment();
+
+        bundle = new Bundle();
+        bundle.putString(TaskDBOpenHelper.TASK_TITLE, taskList.get(position).getTitle());
+        bundle.putInt(POSITION, position);
+
+        removeDialog.setArguments(bundle);
+        removeDialog.setListener(this);
+        removeDialog.show(((Activity) context).getFragmentManager(), REMOVE_DIALOG);
+    }
+
+    /*
+    implemented listener from RemoveTaskDialogFragment
+     */
+    @Override
+    public void returnData(int result) {
+        // list index can't be negative
+        if (result != -1) {
+            taskList.remove(result);
+            notifyDataSetChanged();
+        }
     }
 }
