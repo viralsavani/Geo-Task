@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.model.Item;
@@ -116,6 +115,9 @@ public class TaskDataSource {
         }
     }
 
+    /*
+    Remove Task from Both Tables
+     */
     public void deleteTask(int taskId){
         taskDB.delete(TaskDBOpenHelper.TASK_TABLE_NAME,
                 TaskDBOpenHelper.TASK_ID + " = ? ",

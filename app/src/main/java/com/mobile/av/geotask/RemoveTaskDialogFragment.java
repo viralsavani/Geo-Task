@@ -3,14 +3,9 @@ package com.mobile.av.geotask;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -40,7 +35,6 @@ public class RemoveTaskDialogFragment extends DialogFragment {
         final Bundle bundle = getArguments();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.remove_task_dialog_fragment, null);
