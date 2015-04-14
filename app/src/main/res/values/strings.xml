@@ -7,4 +7,7 @@
     <string name="dialog_fragment_title">Remove Task</string>
     <string name="dialog_fragment_positive_button_label">REMOVE</string>
     <string name="dialog_fragment_negative_button_label">CANCEL</string>
+    <string name="title_activity_list_item_detail">ListItemDetailActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_task_detail">TaskDetail</string>
 </resources>
