@@ -10,6 +10,8 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mobile.av.geotask.model.Task;
+
 
 public class MainActivity extends ActionBarActivity implements TaskListFragment.OnListItemSelectedListener {
 
@@ -37,17 +39,20 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent prefsIntent = new Intent(this,PrefsActivity.class);
+            Intent prefsIntent = new Intent(this, PrefsActivity.class);
             startActivity(prefsIntent);
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    Implemented method from Task List Fragment
+     */
     @Override
-    public void onItemClicked(int position, Bundle taskDetails) {
-        Intent listItemClickIntent = new Intent(MainActivity.this, TaskDetailActivity.class);
-        listItemClickIntent.putExtras(taskDetails);
+    public void onItemClicked(int position, Task task) {
+        Intent listItemClickIntent = new Intent(this, TaskDetailActivity.class);
+        listItemClickIntent.putExtra(".model.Task", task);
         startActivity(listItemClickIntent);
     }
 }

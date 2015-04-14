@@ -72,7 +72,6 @@ public class TaskDataSource {
                 task.setRange(cursor.getLong(cursor.getColumnIndex(TaskDBOpenHelper.TASK_RANGE)));
                 task.setExpr_date(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_EXP_DATE)));
                 task.setRepeat(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_REPEAT)));
-
                 tasks.add(task);
             }
         }
