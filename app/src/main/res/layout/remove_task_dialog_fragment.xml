@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:padding="@dimen/custom_list_padding_between_listItems">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/dialog_fragment_title"
+        android:textStyle="bold"
+        android:id="@+id/dialog_fragment_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text=""
+        android:id="@+id/dialog_fragment_taskName_textView"
+        android:layout_below="@+id/dialog_fragment_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/dialog_fragment_button_width"
+        android:layout_height="@dimen/dialog_fragment_button_height"
+        android:text="@string/dialog_fragment_positive_button_label"
+        android:textSize="12sp"
+        android:textColor="#ffffff"
+        android:background="@color/application_main_color"
+        android:id="@+id/dialog_fragment_button_ok"
+        android:textStyle="bold"
+        android:ellipsize="start"
+        android:typeface="sans"
+        android:layout_below="@+id/dialog_fragment_taskName_textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="@dimen/dialog_fragment_button_width"
+        android:layout_height="@dimen/dialog_fragment_button_height"
+        android:text="@string/dialog_fragment_negative_button_label"
+        android:textSize="12sp"
+        android:background="@color/application_main_color"
+        android:textColor="#ffffff"
+        android:id="@+id/dialog_fragment_button_cancel"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:layout_alignTop="@+id/dialog_fragment_button_ok"
+        android:layout_toLeftOf="@+id/dialog_fragment_button_ok"
+        android:layout_toStartOf="@+id/dialog_fragment_button_ok"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp" />
+
+</RelativeLayout>
