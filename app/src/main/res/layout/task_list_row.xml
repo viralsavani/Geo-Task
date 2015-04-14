@@ -52,7 +52,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginStart="25dp"
             android:layout_row="1"
-            android:background="@mipmap/ic_action_repeat" />
+            android:background="@drawable/ic_action_repeat" />
     </GridLayout>
 
     <TextView
