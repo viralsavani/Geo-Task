@@ -31,7 +31,7 @@ public class TaskListFragment extends ListFragment {
         dataSource.open();
 
         // set initial data TEST
-        //dataSource.setAllData(InitialData.initTask());
+//        dataSource.setAllData(InitialData.initTask());
 
         tasks = dataSource.getAllFromTask();
 
@@ -46,7 +46,6 @@ public class TaskListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.task_list_fragment, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.task_list_fragment, container, false);
     }
 }

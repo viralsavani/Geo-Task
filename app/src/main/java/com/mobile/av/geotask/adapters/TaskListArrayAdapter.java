@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.mobile.av.geotask.R;
 import com.mobile.av.geotask.RemoveTaskDialogFragment;
 import com.mobile.av.geotask.db.TaskDBOpenHelper;
+import com.mobile.av.geotask.db.TaskDataSource;
 import com.mobile.av.geotask.model.Task;
 
 import java.util.List;
@@ -30,10 +31,13 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
     private RemoveTaskDialogFragment removeDialog;
     private Bundle bundle;
 
+    private TaskDataSource taskDataSource;
+
     public TaskListArrayAdapter(Context context, int resource, List<Task> taskList) {
         super(context, resource, taskList);
         this.context = context;
         this.taskList = taskList;
+        taskDataSource = new TaskDataSource(context);
     }
 
     @Override
@@ -86,11 +90,18 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
     implemented listener from RemoveTaskDialogFragment
      */
     @Override
-    public void returnData(int result) {
+    public void returnData(int position) {
         // list index can't be negative
-        if (result != -1) {
-            taskList.remove(result);
+        if (position != -1) {
+            listItemDelete(taskList.get(position).getTask_id());
+            taskList.remove(position);
             notifyDataSetChanged();
         }
+    }
+
+    public void listItemDelete(int taskId){
+        taskDataSource.open();
+        taskDataSource.deleteTask(taskId);
+        taskDataSource.close();
     }
 }
