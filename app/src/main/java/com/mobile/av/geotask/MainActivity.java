@@ -38,9 +38,15 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            Intent prefsIntent = new Intent(this, PrefsActivity.class);
-            startActivity(prefsIntent);
+        switch (id){
+            case R.id.action_settings:
+                Intent prefsIntent = new Intent(this, PrefsActivity.class);
+                startActivity(prefsIntent);
+                break;
+            case R.id.action_add_task:
+                Intent addTaskIntent = new Intent(this, TaskAddActivity.class);
+                startActivity(addTaskIntent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

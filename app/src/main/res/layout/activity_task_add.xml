@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    tools:context="com.mobile.av.geotask.TaskAddActivity">
+
+    <EditText
+        android:id="@+id/title_editText_addTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/title_hint"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/addItem_listView_addTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/choose_location_textView"
+        android:id="@+id/location_textView_addTask"
+        android:layout_marginTop="@dimen/custom_form_padding"/>
+
+    <ListView
+        android:id="@+id/addLocation_listView_addTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/range_textView_addTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/range_textView"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/range_editText_addTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/range_hint"
+                android:inputType="number"
+                android:singleLine="true"/>
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/expires_date_textView_addTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expires_date_textView"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginRight="@dimen/custom_form_padding"
+                android:layout_marginEnd="@dimen/custom_form_padding"/>
+
+            <EditText
+                android:id="@+id/expires_date_editText_addTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/repeat_textView_addTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repeat_textView"
+                android:layout_gravity="start|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <RadioGroup
+                android:id="@+id/repeat_radioGroup_addTask"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/off_radioButton_addTask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/off_radioButton"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:id="@+id/on_radioButton_addTask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/on_radioButton" />
+
+            </RadioGroup>
+        </TableRow>
+
+    </TableLayout>
+
+
+</LinearLayout>

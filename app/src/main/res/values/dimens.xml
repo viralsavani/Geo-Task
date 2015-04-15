@@ -2,6 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="custom_row_margin">10dp</dimen>
     <dimen name="custom_list_padding">3dp</dimen>
+    <dimen name="custom_form_padding">10dp</dimen>
     <dimen name="custom_list_padding_between_listItems">10dp</dimen>
     <dimen name="dialog_fragment_button_width">60dp</dimen>
     <dimen name="dialog_fragment_button_height">30dp</dimen>
