@@ -14,4 +14,6 @@
     <string name="off_radioButton">OFF</string>
     <string name="range_hint">Range from location</string>
     <string name="choose_location_textView">Choose Location</string>
+    <string name="add_location_listAdd">Add Location</string>
+    <string name="add_item_listAdd">Add Item</string>
 </resources>

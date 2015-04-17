@@ -75,6 +75,7 @@ public class TaskDataSource {
                 tasks.add(task);
             }
         }
+        cursor.close();
         return tasks;
     }
 
