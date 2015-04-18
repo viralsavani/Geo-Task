@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,14 +30,12 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
     private List<Task> taskList;
     private RemoveTaskDialogFragment removeDialog;
     private Bundle bundle;
-
     private TaskDataSource taskDataSource;
 
     public TaskListArrayAdapter(Context context, int resource, List<Task> taskList) {
         super(context, resource, taskList);
         this.context = context;
         this.taskList = taskList;
-        taskDataSource = new TaskDataSource(context);
     }
 
     @Override
@@ -101,6 +98,7 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
     }
 
     public void listItemDelete(int taskId){
+        taskDataSource = new TaskDataSource(context);
         taskDataSource.open();
         taskDataSource.deleteTask(taskId);
         taskDataSource.close();

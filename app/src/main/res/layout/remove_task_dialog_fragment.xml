@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/dialog_fragment_title"
+        android:text="@string/remove_task"
         android:textStyle="bold"
         android:id="@+id/dialog_fragment_title" />
 
@@ -28,7 +28,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="@dimen/dialog_fragment_button_width"
         android:layout_height="@dimen/dialog_fragment_button_height"
-        android:text="@string/dialog_fragment_positive_button_label"
+        android:text="@string/remove"
         android:textSize="12sp"
         android:textColor="#ffffff"
         android:background="@color/application_main_color"
@@ -44,7 +44,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="@dimen/dialog_fragment_button_width"
         android:layout_height="@dimen/dialog_fragment_button_height"
-        android:text="@string/dialog_fragment_negative_button_label"
+        android:text="@string/cancel"
         android:textSize="12sp"
         android:background="@color/application_main_color"
         android:textColor="#ffffff"

@@ -22,6 +22,7 @@ public class TaskListFragment extends ListFragment {
     TaskDataSource dataSource;
     List<Task> tasks;
     OnListItemSelectedListener listItemSelectorCallback;
+    TaskListArrayAdapter taskListArrayAdapter;
 
     public TaskListFragment() {
     }
@@ -39,10 +40,10 @@ public class TaskListFragment extends ListFragment {
         tasks = dataSource.getAllFromTask();
 
         //Custom Array Adapter
-        TaskListArrayAdapter adapter = new TaskListArrayAdapter(getActivity(),
+        taskListArrayAdapter = new TaskListArrayAdapter(getActivity(),
                 R.layout.task_list_fragment,
                 tasks);
-        setListAdapter(adapter);
+        setListAdapter(taskListArrayAdapter);
 
         dataSource.close();
     }

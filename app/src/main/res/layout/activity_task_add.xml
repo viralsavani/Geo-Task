@@ -1,11 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -21,10 +20,21 @@
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <TextView
+            android:id="@+id/item_textView_addTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/custom_form_padding"
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:text="@string/item_list"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
         <ListView
             android:id="@+id/addItem_listView_addTask"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:dividerHeight="@dimen/custom_row_margin"
+            android:divider="#00000000"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,12 +44,15 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/addItem_imageButton_addTask"
+                android:id="@+id/addItem_imageView_addTask"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/custom_row_margin"
                 android:layout_marginRight="@dimen/custom_row_margin"
-                android:src="@drawable/ic_action_add" />
+                android:background="#12cdc2"
+                android:contentDescription="@string/add_new_item"
+                android:onClick="addNewItem"
+                android:src="@drawable/ic_action_add_theme" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -52,20 +65,20 @@
                     android:layout_marginLeft="@dimen/custom_row_margin"
                     android:layout_marginStart="@dimen/custom_row_margin"
                     android:gravity="start|center_vertical"
-                    android:text="@string/add_item_listAdd"
+                    android:text="@string/add_item"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </FrameLayout>
 
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/location_textView_addTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/custom_form_padding"
-            android:text="@string/choose_location_textView"
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:text="@string/choose_location"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ListView
@@ -81,12 +94,14 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/addLocation_imageButton_addTask"
+                android:id="@+id/addLocation_imageView_addTask"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/custom_row_margin"
                 android:layout_marginRight="@dimen/custom_row_margin"
-                android:src="@drawable/ic_action_add" />
+                android:background="#12cdc2"
+                android:contentDescription="@string/add_new_location"
+                android:src="@drawable/ic_action_add_theme" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -99,7 +114,7 @@
                     android:layout_marginLeft="@dimen/custom_row_margin"
                     android:layout_marginStart="@dimen/custom_row_margin"
                     android:gravity="start|center_vertical"
-                    android:text="@string/add_location_listAdd"
+                    android:text="@string/add_location"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
             </FrameLayout>
@@ -117,7 +132,7 @@
                     android:id="@+id/range_textView_addTask"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/range_textView"
+                    android:text="@string/range"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
@@ -137,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/custom_form_padding"
                     android:layout_marginRight="@dimen/custom_form_padding"
-                    android:text="@string/expires_date_textView"
+                    android:text="@string/expr_date"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
@@ -154,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
-                    android:text="@string/repeat_textView"
+                    android:text="@string/repeat"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <RadioGroup
@@ -168,13 +183,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="@string/off_radioButton" />
+                        android:text="@string/off" />
 
                     <RadioButton
                         android:id="@+id/on_radioButton_addTask"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/on_radioButton" />
+                        android:text="@string/on" />
 
                 </RadioGroup>
             </TableRow>
