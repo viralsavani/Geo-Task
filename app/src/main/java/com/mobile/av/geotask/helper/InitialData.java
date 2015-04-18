@@ -36,7 +36,6 @@ public class InitialData {
             for (int j = 0; j < 3; j++) {
                 item = new Item();
                 item.setName("Item " + i + " : " + j);
-                item.setNote("ITEM TEST NOTE");
                 status = status == 0 ? 1 : 0;
                 item.setStatus(status);
                 items.add(item);

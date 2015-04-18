@@ -194,5 +194,20 @@
                 </RadioGroup>
             </TableRow>
         </TableLayout>
+
+        <TextView
+            android:id="@+id/note_textView_addTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/custom_form_padding"
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:text="@string/note"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:padding="@dimen/custom_row_margin"
+            android:background="@drawable/square_shape"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </ScrollView>

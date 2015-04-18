@@ -20,6 +20,7 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
     public static final String TASK_RANGE = "range";
     public static final String TASK_EXP_DATE = "expr_date";
     public static final String TASK_REPEAT = "repeat";
+    public static final String TASK_NOTE = "note";
     public static final String TASK_LOCATION = "location";
 
     // ItemList table column constants
@@ -27,7 +28,6 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
     public static final String ITEMS_ID = "items_id";
     public static final String ITEMS_STATUS = "status";
     public static final String ITEMS_NAME = "name";
-    public static final String ITEMS_NOTE = "note";
 
     // Query for creating tables
     public static final String TASK_TABLE_CREATE =
@@ -37,6 +37,7 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
                     TASK_RANGE + " NUMERIC, " +
                     TASK_EXP_DATE + " TEXT, " +
                     TASK_REPEAT + " INTEGER, " +
+                    TASK_NOTE + " TEXT, " +
                     TASK_LOCATION + " TEXT " +
                     ")";
 
@@ -46,7 +47,6 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
                     TASK_ID + " INTEGER, " +
                     ITEMS_STATUS + " INTEGER, " +
                     ITEMS_NAME + " TEXT, " +
-                    ITEMS_NOTE + " TEXT, " +
                     "FOREIGN KEY(" + TASK_ID + ") REFERENCES " + TASK_TABLE_NAME + "(" + TASK_ID + ") " +
                     ")";
 

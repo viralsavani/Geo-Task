@@ -11,7 +11,6 @@ public class Item implements Parcelable{
     private int item_id;
     private int status = 0;
     private String name;
-    private String note;
 
     public Item(){}
 
@@ -19,7 +18,6 @@ public class Item implements Parcelable{
         item_id = in.readInt();
         status = in.readInt();
         name = in.readString();
-        note = in.readString();
     }
 
     public int getItem_id() {
@@ -46,20 +44,11 @@ public class Item implements Parcelable{
         this.name = name;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     @Override
     public String toString() {
         return "ID: " + item_id +
                 "\nStatus: " + status +
-                "\nName: " + name +
-                "\nNote: " + note;
+                "\nName: " + name;
     }
 
     @Override
@@ -72,7 +61,6 @@ public class Item implements Parcelable{
         dest.writeInt(item_id);
         dest.writeInt(status);
         dest.writeString(name);
-        dest.writeString(note);
     }
 
     public static final Creator<Item> CREATOR = new Creator<Item>() {

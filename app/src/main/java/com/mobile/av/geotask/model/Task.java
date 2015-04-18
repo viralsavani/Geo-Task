@@ -18,6 +18,7 @@ public class Task implements Parcelable{
     private long range;
     private String expr_date;
     private int repeat = 0;
+    private String note;
     private ArrayList<LatLng> location;
 
     public Task(){
@@ -33,6 +34,7 @@ public class Task implements Parcelable{
         range = in.readLong();
         expr_date = in.readString();
         repeat = in.readInt();
+        note = in.readString();
         in.readTypedList(location,LatLng.CREATOR);
     }
 
@@ -84,6 +86,14 @@ public class Task implements Parcelable{
         this.repeat = repeat;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public ArrayList<LatLng> getLocation() {
         return location;
     }
@@ -97,7 +107,8 @@ public class Task implements Parcelable{
         return "Title: " + title +
                 "\nRange: " + range +
                 "\nExpr_Date: " + expr_date.toString() +
-                "\nRepeat: " + repeat;
+                "\nRepeat: " + repeat +
+                "\nNote: " + note;
     }
 
     @Override
@@ -113,6 +124,7 @@ public class Task implements Parcelable{
         dest.writeLong(range);
         dest.writeString(expr_date);
         dest.writeInt(repeat);
+        dest.writeString(note);
         dest.writeTypedList(location);
     }
 

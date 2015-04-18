@@ -24,6 +24,7 @@ public class TaskDataSource {
             TaskDBOpenHelper.TASK_RANGE,
             TaskDBOpenHelper.TASK_EXP_DATE,
             TaskDBOpenHelper.TASK_REPEAT,
+            TaskDBOpenHelper.TASK_NOTE,
             TaskDBOpenHelper.TASK_LOCATION
     };
 
@@ -31,8 +32,7 @@ public class TaskDataSource {
             TaskDBOpenHelper.ITEMS_ID,
             TaskDBOpenHelper.TASK_ID,
             TaskDBOpenHelper.ITEMS_STATUS,
-            TaskDBOpenHelper.ITEMS_NAME,
-            TaskDBOpenHelper.ITEMS_NOTE
+            TaskDBOpenHelper.ITEMS_NAME
     };
 
     private SQLiteOpenHelper taskDBOpenHelper;
@@ -72,6 +72,7 @@ public class TaskDataSource {
                 task.setRange(cursor.getLong(cursor.getColumnIndex(TaskDBOpenHelper.TASK_RANGE)));
                 task.setExpr_date(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_EXP_DATE)));
                 task.setRepeat(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_REPEAT)));
+                task.setNote(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_NOTE)));
                 tasks.add(task);
             }
         }
@@ -108,7 +109,6 @@ public class TaskDataSource {
                 values.put(TaskDBOpenHelper.TASK_ID, insertID);
                 values.put(TaskDBOpenHelper.ITEMS_STATUS, item.getStatus());
                 values.put(TaskDBOpenHelper.ITEMS_NAME, item.getName());
-                values.put(TaskDBOpenHelper.ITEMS_NOTE, item.getNote());
 
                 taskDB.insert(TaskDBOpenHelper.ITEMS_TABLE_NAME, null, values);
             }

@@ -5,14 +5,6 @@
     android:background="@drawable/square_shape"
     android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/remove_imageButton_addItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#12cdc2"
-        android:contentDescription="@string/remove_item"
-        android:src="@drawable/ic_action_discard" />
-
     <EditText
         android:id="@+id/title_editText_addItem"
         android:layout_width="0dp"
@@ -27,11 +19,11 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageButton
-        android:id="@+id/addItem_imageButton_addItem"
+        android:id="@+id/remove_imageButton_addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#12cdc2"
-        android:contentDescription="@string/add_detail_note"
-        android:src="@drawable/ic_action_note" />
+        android:contentDescription="@string/remove_item"
+        android:src="@drawable/ic_action_discard" />
 
 </LinearLayout>

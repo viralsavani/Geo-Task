@@ -5,7 +5,6 @@
     <string name="action_save_task">Save Task</string>
     <string name="remove_task">Remove Task</string>
     <string name="remove">REMOVE</string>
-    <string name="cancel">CANCEL</string>
     <string name="range">Range</string>
     <string name="title_hint">Enter Title</string>
     <string name="expr_date">Expr Date</string>
@@ -21,4 +20,5 @@
     <string name="add_detail_note">Add Detail Note</string>
     <string name="remove_item">Remove Item</string>
     <string name="item_list">Item List</string>
+    <string name="note">Note</string>
 </resources>
