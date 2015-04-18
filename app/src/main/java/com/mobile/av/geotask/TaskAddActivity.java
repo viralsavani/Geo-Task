@@ -18,7 +18,7 @@ import com.mobile.av.geotask.model.Item;
 import java.util.ArrayList;
 
 
-public class TaskAddActivity extends ActionBarActivity {
+public class TaskAddActivity extends ActionBarActivity implements NewItemListArrayAdapter.Listener{
 
     ArrayList<Item> itemList;
     Item item;
@@ -39,6 +39,7 @@ public class TaskAddActivity extends ActionBarActivity {
         // ItemList handlers
         itemList = new ArrayList<>();
         itemListArrayAdapter = new NewItemListArrayAdapter(this, R.layout.item_add_list_row, itemList);
+        itemListArrayAdapter.setListener(this);
         itemListView = (ListView) findViewById(R.id.addItem_listView_addTask);
         itemListView.setAdapter(itemListArrayAdapter);
     }
@@ -49,6 +50,16 @@ public class TaskAddActivity extends ActionBarActivity {
     public void addNewItem(View v) {
         item = new Item();
         itemList.add(item);
+        itemListArrayAdapter.notifyDataSetChanged();
+        ListResize.setListViewHeightBasedOnChildren(itemListView);
+    }
+
+    /*
+    Implemented method to remove item from list
+     */
+    @Override
+    public void removeItem(int position) {
+        itemList.remove(position);
         itemListArrayAdapter.notifyDataSetChanged();
         ListResize.setListViewHeightBasedOnChildren(itemListView);
     }

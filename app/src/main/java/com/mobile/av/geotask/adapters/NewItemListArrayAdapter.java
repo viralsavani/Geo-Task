@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.mobile.av.geotask.R;
 import com.mobile.av.geotask.model.Item;
@@ -22,10 +23,20 @@ public class NewItemListArrayAdapter extends ArrayAdapter<Item> {
 
     private ArrayList<Item> itemList;
     private MyTextWatcher watcher;
+    private MyOnClickListener myOnClickListener;
+    private Listener listener;
 
     public NewItemListArrayAdapter(Context context, int resource, ArrayList<Item> itemList) {
         super(context, resource, itemList);
         this.itemList = itemList;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public interface Listener{
+        void removeItem(int position);
     }
 
     @Override
@@ -33,15 +44,24 @@ public class NewItemListArrayAdapter extends ArrayAdapter<Item> {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         convertView = layoutInflater.inflate(R.layout.item_add_list_row, null, true);
 
+        // Handle Name of Items
         EditText editText = (EditText) convertView.findViewById(R.id.title_editText_addItem);
         editText.setText(itemList.get(position).getName());
         editText.removeTextChangedListener(watcher);
         watcher = new MyTextWatcher(position);
         editText.addTextChangedListener(watcher);
 
+        // Handle Remove Items
+        ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.remove_imageButton_addItem);
+        myOnClickListener = new MyOnClickListener(position);
+        imageButton.setOnClickListener(myOnClickListener);
+
         return convertView;
     }
 
+    /*
+    TextWatcher to preserve text while expanding or shrinking listView
+     */
     private class MyTextWatcher implements TextWatcher {
         private int position;
 
@@ -63,6 +83,23 @@ public class NewItemListArrayAdapter extends ArrayAdapter<Item> {
         }
     }
 
+    /*
+    OnClickListener to set listener for remove ImageButton
+     */
+    private class MyOnClickListener implements View.OnClickListener{
+        private int position;
+
+        private MyOnClickListener(int position){
+            this.position = position;
+        }
+
+        @Override
+        public void onClick(View v) {
+            listener.removeItem(position);
+        }
+    }
+
+    // Method to return saved Item Names
     public ArrayList<Item> getItemNames() {
         return itemList;
     }

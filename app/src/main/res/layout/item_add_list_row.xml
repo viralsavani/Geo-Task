@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <ImageButton
-        android:id="@+id/remove_imageView_addItem"
+        android:id="@+id/remove_imageButton_addItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#12cdc2"
