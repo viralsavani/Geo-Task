@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.mobile.av.geotask.adapters.TaskListArrayAdapter;
 import com.mobile.av.geotask.db.TaskDataSource;
+import com.mobile.av.geotask.helper.InitialData;
 import com.mobile.av.geotask.model.Task;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class TaskListFragment extends ListFragment {
         dataSource.open();
 
         // set initial data TEST
-        //dataSource.setAllData(InitialData.initTask());
+       //dataSource.setAllData(InitialData.initTask());
 
         tasks = dataSource.getAllFromTask();
 

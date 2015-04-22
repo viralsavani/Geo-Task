@@ -12,6 +12,7 @@
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="range_hint">Range from location</string>
+    <string name="expr_date_hint">mm-dd-yyyy</string>
     <string name="choose_location">Choose Location</string>
     <string name="add_location">Add Location</string>
     <string name="add_item">Add Item</string>

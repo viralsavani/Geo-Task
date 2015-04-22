@@ -156,10 +156,13 @@
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <EditText
-                    android:id="@+id/expires_date_editText_addTask"
+                    android:id="@+id/expires_editText_addTask"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="date" />
+                    android:inputType="text"
+                    android:text="@string/expr_date_hint"
+                    android:cursorVisible="false"
+                    android:onClick="showDatePickerDialog"/>
             </TableRow>
 
             <TableRow>
