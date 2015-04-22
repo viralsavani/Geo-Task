@@ -10,10 +10,13 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mobile.av.geotask.adapters.TaskListArrayAdapter;
 import com.mobile.av.geotask.model.Task;
 
 
 public class MainActivity extends ActionBarActivity implements TaskListFragment.OnListItemSelectedListener {
+
+    TaskListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,15 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
         actionBar.setElevation(10);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        listFragment = new TaskListFragment();
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, listFragment)
+                .commit();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,7 +50,7 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.action_settings:
                 Intent prefsIntent = new Intent(this, PrefsActivity.class);
                 startActivity(prefsIntent);
@@ -52,12 +64,10 @@ public class MainActivity extends ActionBarActivity implements TaskListFragment.
         return super.onOptionsItemSelected(item);
     }
 
-    /*
-    Implemented method from Task List Fragment
-     */
     @Override
     public void onItemClicked(int position, Task task) {
-        Intent listItemClickIntent = new Intent(this, TaskDetailActivity.class);
+        Intent listItemClickIntent = new Intent(MainActivity.this, TaskDetailActivity.class);
+        listItemClickIntent.putExtra(TaskListArrayAdapter.POSITION, position);
         listItemClickIntent.putExtra(".model.Task", task);
         startActivity(listItemClickIntent);
     }

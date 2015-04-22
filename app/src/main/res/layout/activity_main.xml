@@ -6,11 +6,4 @@
     tools:context=".MainActivity"
     android:background="#FFFFFF">
 
-    <fragment
-        android:id="@+id/listFragment"
-        android:name="com.mobile.av.geotask.TaskListFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:layout="@layout/task_list_fragment"/>
-
 </RelativeLayout>

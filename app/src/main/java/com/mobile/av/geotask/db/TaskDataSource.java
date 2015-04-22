@@ -57,7 +57,7 @@ public class TaskDataSource {
     }
 
     /*
-    Return List of all Task ------------ TEST TO POPULATE LIST INITIAL
+    Return List of all Task
      */
     public List<Task> getAllFromTask() {
         Cursor cursor = taskDB.query(TaskDBOpenHelper.TASK_TABLE_NAME, task_All_Column, null, null, null, null, null);
@@ -65,14 +65,27 @@ public class TaskDataSource {
         List<Task> tasks = new ArrayList<>();
         if (cursor.getCount() > 0) {
             Task task;
+            ArrayList<LatLng> locationList;
             while (cursor.moveToNext()) {
                 task = new Task();
+                locationList = new ArrayList<>();
                 task.setTask_id(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_ID)));
                 task.setTitle(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_TITLE)));
                 task.setRange(cursor.getLong(cursor.getColumnIndex(TaskDBOpenHelper.TASK_RANGE)));
                 task.setExpr_date(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_EXP_DATE)));
                 task.setRepeat(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_REPEAT)));
                 task.setNote(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_NOTE)));
+
+                String locationString = cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_LOCATION));
+                String[] split = locationString.split(";");
+                  for (String string : split){
+                      if(string.length() > 1) {
+                          String[] latLong = string.split(",");
+                          locationList.add(new LatLng(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1])));
+                      }
+                  }
+                task.setLocation(locationList);
+
                 tasks.add(task);
             }
         }
@@ -96,7 +109,8 @@ public class TaskDataSource {
             ArrayList<LatLng> latLngs = task.getLocation();
             StringBuilder sb = new StringBuilder();
             for (LatLng latLng : latLngs) {
-                sb.append(latLng.toString() + ";");
+                sb.append(latLng.latitude + ",");
+                sb.append(latLng.longitude + ";");
             }
             values.put(TaskDBOpenHelper.TASK_LOCATION, sb.toString());
 
@@ -127,5 +141,32 @@ public class TaskDataSource {
                 TaskDBOpenHelper.TASK_ID + " = ? ",
                 new String[]{String.valueOf(taskId)});
 
+    }
+
+    /**
+     * Retrieves all the items of specified task.
+     * @param taskId
+     */
+    public ArrayList<Item> getItemsForTask(int taskId){
+        Cursor cursor = taskDB.query(TaskDBOpenHelper.ITEMS_TABLE_NAME,
+                                        items_All_Column,
+                                        TaskDBOpenHelper.TASK_ID + " = ?" ,
+                                        new String[] {String.valueOf(taskId)},
+                                        null, null, null);
+
+        ArrayList<Item> itemList = new ArrayList<>();
+
+        if (cursor.getCount() > 0){
+            Item item;
+            while (cursor.moveToNext()){
+                item = new Item();
+                item.setItem_id(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.ITEMS_ID)));
+                item.setStatus(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.ITEMS_STATUS)));
+                item.setName(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.ITEMS_NAME)));
+                itemList.add(item);
+            }
+        }
+        cursor.close();
+        return itemList;
     }
 }

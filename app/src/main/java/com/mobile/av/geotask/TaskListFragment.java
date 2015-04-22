@@ -21,37 +21,11 @@ public class TaskListFragment extends ListFragment {
 
     TaskDataSource dataSource;
     List<Task> tasks;
-    OnListItemSelectedListener listItemSelectorCallback;
-    TaskListArrayAdapter taskListArrayAdapter;
 
     public TaskListFragment() {
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        dataSource = new TaskDataSource(getActivity());
-        dataSource.open();
-
-        // set initial data TEST
-       //dataSource.setAllData(InitialData.initTask());
-
-        tasks = dataSource.getAllFromTask();
-
-        //Custom Array Adapter
-        taskListArrayAdapter = new TaskListArrayAdapter(getActivity(),
-                R.layout.task_list_fragment,
-                tasks);
-        setListAdapter(taskListArrayAdapter);
-
-        dataSource.close();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.task_list_fragment, container, false);
-    }
+    OnListItemSelectedListener listItemSelectorCallback;
 
     // Interface to communicate with MainActivity for any items selected from list
     public interface OnListItemSelectedListener{
@@ -69,7 +43,39 @@ public class TaskListFragment extends ListFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        dataSource = new TaskDataSource(getActivity());
+        dataSource.open();
+
+        // set initial data TEST
+        //dataSource.setAllData(InitialData.initTask());
+
+        tasks = dataSource.getAllFromTask();
+
+        //Custom Array Adapter
+        TaskListArrayAdapter adapter = new TaskListArrayAdapter(getActivity(),
+                R.layout.task_list_fragment,
+                tasks);
+        setListAdapter(adapter);
+
+        dataSource.close();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.task_list_fragment, container, false);
+    }
+
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+
+        dataSource = new TaskDataSource(getActivity());
+        dataSource.open();
+        tasks.get(position).setItems(dataSource.getItemsForTask(tasks.get(position).getTask_id()));
+        dataSource.close();
+
         listItemSelectorCallback.onItemClicked(position, tasks.get(position));
     }
 }

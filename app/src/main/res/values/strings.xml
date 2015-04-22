@@ -21,4 +21,6 @@
     <string name="remove_item">Remove Item</string>
     <string name="item_list">Item List</string>
     <string name="note">Note</string>
+    <string name="action_delete_task">Delete Task</string>
+    <string name="action_edit_task">Edit Task</string>
 </resources>
