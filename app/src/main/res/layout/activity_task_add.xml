@@ -162,6 +162,7 @@
                     android:inputType="text"
                     android:text="@string/expr_date_hint"
                     android:cursorVisible="false"
+                    android:focusable="false"
                     android:onClick="showDatePickerDialog"/>
             </TableRow>
 

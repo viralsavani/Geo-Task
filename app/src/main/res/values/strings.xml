@@ -24,4 +24,5 @@
     <string name="note">Note</string>
     <string name="action_delete_task">Delete Task</string>
     <string name="action_edit_task">Edit Task</string>
+    <string name="location_list">Location List</string>
 </resources>
