@@ -1,8 +1,136 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context="com.mobile.av.geotask.ItemDetailFragment">
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_horizontal_margin">
 
-</RelativeLayout>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_shape"
+            android:stretchColumns="1"
+            android:paddingBottom="@dimen/custom_row_margin"
+            android:paddingTop="@dimen/custom_row_margin">
+
+            <TableRow
+                android:layout_marginLeft="@dimen/custom_row_margin"
+                android:layout_marginStart="@dimen/custom_row_margin">
+
+                <TextView
+                    android:id="@+id/expires_date_label_taskDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/custom_form_padding"
+                    android:layout_marginRight="@dimen/custom_form_padding"
+                    android:text="@string/expr_date"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/expires_textView_taskDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/expr_date_hint"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginLeft="@dimen/custom_row_margin"
+                android:layout_marginStart="@dimen/custom_row_margin">
+
+                <TextView
+                    android:id="@+id/range_label_taskDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/range"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/range_textView_taskDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint=""
+                    android:singleLine="true"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+
+            <TableRow
+                android:layout_marginLeft="@dimen/custom_row_margin"
+                android:layout_marginStart="@dimen/custom_row_margin">
+
+                <TextView
+                    android:id="@+id/repeat_label_taskDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:text="@string/repeat"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <TextView
+                    android:id="@+id/repeat_textView_taskDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:focusable="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/note_label_taskDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/custom_form_padding"
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:text="@string/note"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/note_textView_taskDetail"
+            android:padding="@dimen/custom_row_margin"
+            android:background="@drawable/square_shape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:layout_marginBottom="@dimen/custom_row_margin"/>
+
+        <TextView
+            android:id="@+id/item_textView_taskDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/custom_form_padding"
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:text="@string/item_list"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ListView
+            android:id="@+id/item_listView_taskDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="@dimen/custom_row_margin"
+            android:divider="#00000000"/>
+
+        <TextView
+            android:id="@+id/location_textView_taskDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/custom_form_padding"
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:text="@string/location_list"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ListView
+            android:id="@+id/location_listView_taskDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:dividerHeight="@dimen/custom_row_margin"
+            android:divider="#00000000"/>
+
+    </LinearLayout>
+
+</ScrollView>

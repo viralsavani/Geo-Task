@@ -21,6 +21,8 @@ public class LocationListArrayAdapter extends ArrayAdapter<LatLng> {
     private Context context;
     private ArrayList<LatLng> locationList;
 
+    private TextView locationTextView;
+
     public LocationListArrayAdapter(Context context, int resource, ArrayList<LatLng> locationList) {
         super(context, resource, locationList);
         this.context = context;
@@ -30,6 +32,10 @@ public class LocationListArrayAdapter extends ArrayAdapter<LatLng> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+        convertView = layoutInflater.inflate(R.layout.item_detail_location_row, null, true);
+
+        locationTextView = (TextView) convertView.findViewById(R.id.location_row_textView_taskDetail);
+        locationTextView.setText(locationList.get(position).toString());
 
         return convertView;
     }
