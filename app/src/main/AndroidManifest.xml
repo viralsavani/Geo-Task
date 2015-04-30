@@ -34,12 +34,15 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="" />
+            android:value="@string/google_maps_key" />
 
         <activity android:name=".PrefsActivity" />
         <activity android:name=".TaskDetailActivity" />
         <activity android:name=".TaskAddActivity"
             android:configChanges="orientation|screenSize"/>
+        <activity android:name="com.mobile.av.geotask.MapActivity"
+            android:label="@string/title_activity_map"/>
+
     </application>
 
 </manifest>

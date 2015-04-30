@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_stacked_max_height"
+        android:background="@drawable/square_shape"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/search_textView_addLocation"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center_vertical"
+            android:background="@null"
+            android:inputType="text"
+            android:paddingLeft="@dimen/custom_row_margin"
+            android:paddingRight="@dimen/custom_row_margin"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <ImageButton
+            android:id="@+id/search_imageButton_addLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="#12cdc2"
+            android:contentDescription="@string/remove_item"
+            android:src="@android:drawable/ic_menu_search" />
+
+    </LinearLayout>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context="com.mobile.av.geotask.MapActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+</LinearLayout>
+
+

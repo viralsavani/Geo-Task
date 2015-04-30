@@ -1,5 +1,6 @@
 package com.mobile.av.geotask;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.adapters.NewItemListArrayAdapter;
+import com.mobile.av.geotask.adapters.NewLocationListArrayAdapter;
 import com.mobile.av.geotask.helper.ListResize;
 import com.mobile.av.geotask.model.Item;
 
@@ -27,13 +30,21 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class TaskAddActivity extends ActionBarActivity implements NewItemListArrayAdapter.Listener, DatePickerFragment.DatePickerListener{
+public class TaskAddActivity extends ActionBarActivity implements NewItemListArrayAdapter.Listener,
+        DatePickerFragment.DatePickerListener, NewLocationListArrayAdapter.NewLocationListener,
+        NewLocationListArrayAdapter.MapFragmentListener{
 
     ArrayList<Item> itemList;
+    ArrayList<LatLng> locationList;
     Item item;
+    LatLng location;
     NewItemListArrayAdapter itemListArrayAdapter;
+    NewLocationListArrayAdapter locationListArrayAdapter;
     ListView itemListView;
+    ListView locationListView;
     EditText expirationDate;
+
+    private static final int MAP_INTENT_GET_MSG = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,14 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         itemListArrayAdapter.setListener(this);
         itemListView = (ListView) findViewById(R.id.addItem_listView_addTask);
         itemListView.setAdapter(itemListArrayAdapter);
+
+        // LocationList handlers
+        locationList = new ArrayList<>();
+        locationListArrayAdapter = new NewLocationListArrayAdapter(this, R.layout.location_add_list_row, locationList);
+        locationListArrayAdapter.setNewLocationListener(this);
+        locationListArrayAdapter.setMapFragmentListener(this);
+        locationListView = (ListView) findViewById(R.id.addLocation_listView_addTask);
+        locationListView.setAdapter(locationListArrayAdapter);
     }
 
     /*
@@ -75,6 +94,26 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         itemList.remove(position);
         itemListArrayAdapter.notifyDataSetChanged();
         ListResize.setListViewHeightBasedOnChildren(itemListView);
+    }
+
+    /**
+     * Method to add new location
+     */
+    public void addNewLocation(View v){
+        location = new LatLng(0,0);
+        locationList.add(location);
+        locationListArrayAdapter.notifyDataSetChanged();
+        ListResize.setListViewHeightBasedOnChildren(locationListView);
+    }
+
+    /**
+     * Implemented method from NewLocationListArrayAdapter's interface
+     */
+    @Override
+    public void removeLocation(int position) {
+        locationList.remove(position);
+        locationListArrayAdapter.notifyDataSetChanged();
+        ListResize.setListViewHeightBasedOnChildren(locationListView);
     }
 
     /**
@@ -129,5 +168,11 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
     @Override
     public void datePickerReturnData(String date) {
         expirationDate.setText(date);
+    }
+
+    @Override
+    public void addLocation() {
+        Intent mapIntent = new Intent(this, MapActivity.class);
+        startActivityForResult(mapIntent, MAP_INTENT_GET_MSG);
     }
 }
