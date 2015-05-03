@@ -56,6 +56,10 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
         LocationTextViewOnClickListener textViewOnClickListener = new LocationTextViewOnClickListener(position);
         locationTextView.setOnClickListener(textViewOnClickListener);
 
+        if (locationList.get(position).latitude != 0 && locationList.get(position).longitude != 0) {
+            locationTextView.setText(locationList.get(position).toString());
+        }
+
         // Handle location removeImageButton
         ImageButton imageButton = (ImageButton) convertView.findViewById(R.id.remove_imageButton_addLocation);
         RemoveOnClickListener removeListener = new RemoveOnClickListener(position);
