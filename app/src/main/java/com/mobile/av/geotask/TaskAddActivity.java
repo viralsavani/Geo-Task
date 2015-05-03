@@ -1,5 +1,6 @@
 package com.mobile.av.geotask;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -34,6 +35,8 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         DatePickerFragment.DatePickerListener, NewLocationListArrayAdapter.NewLocationListener,
         NewLocationListArrayAdapter.MapFragmentListener{
 
+    public static final String INDEX_IN_LOCATION_LIST = "indexInLocationList";
+
     ArrayList<Item> itemList;
     ArrayList<LatLng> locationList;
     Item item;
@@ -43,6 +46,7 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
     ListView itemListView;
     ListView locationListView;
     EditText expirationDate;
+
 
     private static final int MAP_INTENT_GET_MSG = 1;
 
@@ -173,6 +177,26 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
     @Override
     public void addLocation() {
         Intent mapIntent = new Intent(this, MapActivity.class);
+        int indexInLocationList = locationList.indexOf(location);
+        mapIntent.putExtra(INDEX_IN_LOCATION_LIST, indexInLocationList);
         startActivityForResult(mapIntent, MAP_INTENT_GET_MSG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case MAP_INTENT_GET_MSG:
+                if(resultCode == Activity.RESULT_OK){
+                    LatLng location = data.getExtras().getParcelable(MapActivity.LATLNG_OF_LOCATION);
+                    int locationIndex = data.getIntExtra(TaskAddActivity.INDEX_IN_LOCATION_LIST, -1);
+
+                    if(locationIndex < 0){
+                        Log.e("Geo-Task", "Index to add location in location list is invalid :: -1");
+                    }else{
+                        locationList.add(locationIndex, location);
+                        locationListArrayAdapter.notifyDataSetChanged();
+                    }
+                }
+        }
     }
 }
