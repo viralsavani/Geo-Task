@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.R;
@@ -35,7 +34,7 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
     }
 
     public interface MapFragmentListener{
-        void addLocation();
+        void addLocation(int position);
     }
 
     public void setNewLocationListener(NewLocationListener newLocationListenerCallback){
@@ -98,10 +97,11 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
 
         @Override
         public void onClick(View v) {
-            mapFragmentListenerCallback.addLocation();
+            mapFragmentListenerCallback.addLocation(position);
         }
     }
 
+    // Method to return saved location list
     public ArrayList<LatLng> getLocationList(){
         return locationList;
     }

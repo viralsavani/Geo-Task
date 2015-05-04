@@ -10,12 +10,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_gravity="start|center_vertical"
-        android:background="@null"
+        android:layout_weight="1"
         android:paddingLeft="@dimen/custom_row_margin"
         android:paddingRight="@dimen/custom_row_margin"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:layout_weight="1" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <ImageButton
         android:id="@+id/remove_imageButton_addLocation"

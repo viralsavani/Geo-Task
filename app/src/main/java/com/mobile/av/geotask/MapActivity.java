@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,24 +31,18 @@ import java.io.IOException;
 import java.util.List;
 
 public class MapActivity extends ActionBarActivity implements
-        GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener{
+        GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
     public static final String LATLNG_OF_LOCATION = "latlng_of_selection";
-
     private int indexInLocationList;
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
-
     private TextView searchTextView;
-
     private ImageButton searchButton;
-
     // A Marker to store the last user created marker
     private Marker userSelectedMarker;
-
     // A Marker to keep track of currently selected marker
     private Marker currentlySelectedMarker;
-
     // A LatLng which will send as result to parent activity
     private LatLng currentlySelectedLatLng;
 
@@ -81,7 +74,7 @@ public class MapActivity extends ActionBarActivity implements
                         Context.INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(searchTextView.getWindowToken(), 0);
 
-                if (address != null){
+                if (address != null) {
                     new GeoCoderTask().execute(address);
                 }
             }
@@ -96,21 +89,6 @@ public class MapActivity extends ActionBarActivity implements
         setUpMapIfNeeded();
     }
 
-    /**
-     * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
-     * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mMap} is not null.
-     * <p/>
-     * If it isn't installed {@link SupportMapFragment} (and
-     * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
-     * install/update the Google Play services APK on their device.
-     * <p/>
-     * A user can return to this FragmentActivity after following the prompt and correctly
-     * installing/updating/enabling the Google Play services. Since the FragmentActivity may not
-     * have been completely destroyed during this process (it is likely that it would only be
-     * stopped or paused), {@link #onCreate(Bundle)} may not be called again so we should call this
-     * method in {@link #onResume()} to guarantee that it will be called.
-     */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
@@ -126,14 +104,9 @@ public class MapActivity extends ActionBarActivity implements
         }
     }
 
-    /**
-     * This is where we can add markers or lines, add listeners or move the camera. In this case, we
-     * just add a marker near Africa.
-     * <p/>
-     * This should only be called once and when we are sure that {@link #mMap} is not null.
-     */
+    // Initial Condition for map => Go to current location
     private void setUpMap() {
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("DEFAULT"));
+
     }
 
     @Override
@@ -151,18 +124,14 @@ public class MapActivity extends ActionBarActivity implements
                 // Save the Location selected by user
                 // Perform a check here if user has selected a Location if not
                 // take no action.
-
-                if(currentlySelectedMarker != null){
+                if (currentlySelectedMarker != null) {
                     Intent sendResultIntent = new Intent();
                     sendResultIntent.putExtra(LATLNG_OF_LOCATION, currentlySelectedLatLng);
                     sendResultIntent.putExtra(TaskAddActivity.INDEX_IN_LOCATION_LIST, indexInLocationList);
                     setResult(Activity.RESULT_OK, sendResultIntent);
-
-                    Log.i("GEO-Task MapActivity", currentlySelectedLatLng.toString()+"\t "+indexInLocationList);
-
                     finish();
-                }else{
-                    Toast.makeText(this, "Please select one location", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Please select a location", Toast.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -173,14 +142,13 @@ public class MapActivity extends ActionBarActivity implements
     public void onMapClick(LatLng latLng) {
         try {
             // Remove the previous selected marker by user
-            if (userSelectedMarker != null){
+            if (userSelectedMarker != null) {
                 userSelectedMarker.remove();
             }
 
             // Get the information for the LatLng selected by user
             Geocoder geocoder = new Geocoder(getBaseContext());
             List<Address> address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
 
             userSelectedMarker = mMap.addMarker(getMarkerOptions(address.get(0)));
             onMarkerClick(userSelectedMarker);
@@ -192,32 +160,31 @@ public class MapActivity extends ActionBarActivity implements
 
     /**
      * This method is used to create markerOptions for an given address
+     *
      * @param address the Address of the which MarkerOptions are to be created
      * @return MarkerOption
      */
     public MarkerOptions getMarkerOptions(Address address) {
+        if (address != null) {
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
 
-        if (address == null){
-            Log.e("Geo-Fence", "Address passed to getMarkerOptions is NULL");
-            return null;
+            String addressLine = "";
+            for (int j = 0; j < address.getMaxAddressLineIndex(); j++) {
+                addressLine = addressLine + address.getAddressLine(j);
+            }
+
+            String addressText = String.format(
+                    addressLine,
+                    address.getLocality(),
+                    address.getCountryName());
+
+            return new MarkerOptions()
+                    .title(address.getAddressLine(0))
+                    .position(latLng)
+                    .snippet(addressText);
         }
 
-        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-
-        String addressLine = "";
-        for (int j = 0; j < address.getMaxAddressLineIndex(); j++) {
-            addressLine = addressLine + address.getAddressLine(j);
-        }
-
-        String addressText = String.format(
-                addressLine,
-                address.getLocality(),
-                address.getCountryName());
-
-        return new MarkerOptions()
-                .title(address.getAddressLine(0))
-                .position(latLng)
-                .snippet(addressText);
+        return null;
     }
 
     @Override
@@ -255,7 +222,7 @@ public class MapActivity extends ActionBarActivity implements
 
             if (addresses == null || addresses.size() == 0) {
                 Toast.makeText(getBaseContext(), "No Location found", Toast.LENGTH_SHORT).show();
-            }else {
+            } else {
                 // Clears all the existing markers on the map
                 mMap.clear();
 
@@ -268,7 +235,7 @@ public class MapActivity extends ActionBarActivity implements
                 for (int i = 0; i < addresses.size(); i++) {
 
                     // Locate the first location
-                    if (i == 0){
+                    if (i == 0) {
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(addresses.get(i).getLatitude(),
                                         addresses.get(i).getLongitude()),
