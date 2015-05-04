@@ -23,27 +23,6 @@
                 android:layout_marginStart="@dimen/custom_row_margin">
 
                 <TextView
-                    android:id="@+id/expires_date_label_taskDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/custom_form_padding"
-                    android:layout_marginRight="@dimen/custom_form_padding"
-                    android:text="@string/expr_date"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <TextView
-                    android:id="@+id/expires_textView_taskDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/expr_date_hint"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </TableRow>
-
-            <TableRow
-                android:layout_marginLeft="@dimen/custom_row_margin"
-                android:layout_marginStart="@dimen/custom_row_margin">
-
-                <TextView
                     android:id="@+id/range_label_taskDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,27 +35,6 @@
                     android:layout_height="wrap_content"
                     android:hint=""
                     android:singleLine="true"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </TableRow>
-
-            <TableRow
-                android:layout_marginLeft="@dimen/custom_row_margin"
-                android:layout_marginStart="@dimen/custom_row_margin">
-
-                <TextView
-                    android:id="@+id/repeat_label_taskDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:text="@string/repeat"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <TextView
-                    android:id="@+id/repeat_textView_taskDetail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:focusable="false"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </TableRow>
         </TableLayout>

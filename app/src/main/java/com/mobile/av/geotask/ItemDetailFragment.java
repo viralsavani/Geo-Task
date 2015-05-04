@@ -1,16 +1,14 @@
 package com.mobile.av.geotask;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.adapters.ItemListArrayAdapter;
 import com.mobile.av.geotask.adapters.LocationListArrayAdapter;
 import com.mobile.av.geotask.helper.ListResize;
@@ -24,9 +22,7 @@ public class ItemDetailFragment extends Fragment {
 
     private Task task;
 
-    private TextView expirationDate;
     private TextView range;
-    private TextView repeat;
     private TextView notes;
     private ListView itemListView;
     private ListView locationListView;
@@ -42,27 +38,13 @@ public class ItemDetailFragment extends Fragment {
 
         View taskDetailView = inflater.inflate(R.layout.item_detail_fragment, container, false);
 
-        expirationDate = (TextView) taskDetailView.findViewById(R.id.expires_textView_taskDetail);
         range = (TextView) taskDetailView.findViewById(R.id.range_textView_taskDetail);
-        repeat = (TextView) taskDetailView.findViewById(R.id.repeat_textView_taskDetail);
         notes = (TextView) taskDetailView.findViewById(R.id.note_textView_taskDetail);
         itemListView = (ListView) taskDetailView.findViewById(R.id.item_listView_taskDetail);
         locationListView = (ListView) taskDetailView.findViewById(R.id.location_listView_taskDetail);
 
-        for (LatLng latLng : task.getLocation()){
-            Log.d("--------------------->", latLng.toString());
-        }
-
-
-        expirationDate.setText(task.getExpr_date());
         range.setText(String.valueOf(task.getRange())+" mts");
         notes.setText(task.getNote());
-
-        if (task.getRepeat() == 1){
-            repeat.setText("YES");
-        }else{
-            repeat.setText("NO");
-        }
 
         ItemListArrayAdapter itemAdapter = new ItemListArrayAdapter(getActivity(), R.layout.item_detail_fragment, task.getItems());
         itemListView.setAdapter(itemAdapter);

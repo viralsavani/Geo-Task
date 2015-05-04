@@ -22,8 +22,6 @@ public class TaskDataSource {
             TaskDBOpenHelper.TASK_ID,
             TaskDBOpenHelper.TASK_TITLE,
             TaskDBOpenHelper.TASK_RANGE,
-            TaskDBOpenHelper.TASK_EXP_DATE,
-            TaskDBOpenHelper.TASK_REPEAT,
             TaskDBOpenHelper.TASK_NOTE,
             TaskDBOpenHelper.TASK_LOCATION
     };
@@ -72,8 +70,6 @@ public class TaskDataSource {
                 task.setTask_id(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_ID)));
                 task.setTitle(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_TITLE)));
                 task.setRange(cursor.getLong(cursor.getColumnIndex(TaskDBOpenHelper.TASK_RANGE)));
-                task.setExpr_date(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_EXP_DATE)));
-                task.setRepeat(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_REPEAT)));
                 task.setNote(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_NOTE)));
 
                 String locationString = cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_LOCATION));
@@ -103,8 +99,6 @@ public class TaskDataSource {
 
             values.put(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
             values.put(TaskDBOpenHelper.TASK_RANGE, task.getRange());
-            values.put(TaskDBOpenHelper.TASK_EXP_DATE, task.getExpr_date());
-            values.put(TaskDBOpenHelper.TASK_REPEAT, task.getRepeat());
 
             ArrayList<LatLng> latLngs = task.getLocation();
             StringBuilder sb = new StringBuilder();

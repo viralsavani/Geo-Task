@@ -13,57 +13,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="@dimen/custom_list_padding"
         android:fontFamily="sans-serif"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ffffff"
         android:textStyle="bold" />
 
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/taskTitle_textView_task_row_list"
-        android:layout_alignStart="@+id/taskTitle_textView_task_row_list"
-        android:layout_below="@+id/taskTitle_textView_task_row_list">
-
-        <TextView
-            android:id="@+id/expires_date_textView_task_row_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_row="1"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/repeat_textView_task_row_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="3"
-            android:layout_row="1"
-            android:textColor="#ffffff" />
-
-        <TextView
-            android:id="@+id/repeat_label_task_row_list"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_column="2"
-            android:layout_marginLeft="25dp"
-            android:layout_marginStart="25dp"
-            android:layout_row="1"
-            android:background="@drawable/ic_action_repeat" />
-    </GridLayout>
-
     <TextView
         android:id="@+id/range_textView_task_row_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/gridLayout"
-        android:layout_alignStart="@+id/gridLayout"
-        android:layout_below="@+id/gridLayout"
         android:textColor="#ffffff"
-        android:paddingBottom="@dimen/custom_row_margin"/>
+        android:paddingTop="@dimen/custom_main_list"
+        android:paddingBottom="@dimen/custom_row_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/discardTask_imageView_task_row_list"
@@ -72,7 +36,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_discard"
-        android:padding="@dimen/custom_list_padding"/>
+        android:src="@drawable/ic_action_discard"/>
 
 </RelativeLayout>

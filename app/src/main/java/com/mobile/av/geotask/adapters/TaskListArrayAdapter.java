@@ -44,20 +44,11 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
         convertView = layoutInflater.inflate(R.layout.task_list_row, null, true);
 
         TextView taskTitle = (TextView) convertView.findViewById(R.id.taskTitle_textView_task_row_list);
-        TextView expirationDate = (TextView) convertView.findViewById(R.id.expires_date_textView_task_row_list);
         TextView range = (TextView) convertView.findViewById(R.id.range_textView_task_row_list);
-        TextView repeat = (TextView) convertView.findViewById(R.id.repeat_textView_task_row_list);
         ImageView discardTask = (ImageView) convertView.findViewById(R.id.discardTask_imageView_task_row_list);
 
         taskTitle.setText(taskList.get(position).getTitle());
-        expirationDate.setText(taskList.get(position).getExpr_date());
         range.setText("Range " + String.valueOf(taskList.get(position).getRange()) + " mts");
-
-        if (taskList.get(position).getRepeat() == 1) {
-            repeat.setText("YES");
-        } else {
-            repeat.setText("NO");
-        }
 
         discardTask.setOnClickListener(new View.OnClickListener() {
             @Override

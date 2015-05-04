@@ -1,7 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/android_container"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/android_container">
+    android:layout_height="fill_parent">
 
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
@@ -25,8 +25,8 @@
             android:id="@+id/item_textView_addTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/custom_form_padding"
             android:layout_marginBottom="@dimen/custom_row_margin"
+            android:layout_marginTop="@dimen/custom_form_padding"
             android:text="@string/item_list"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -34,8 +34,8 @@
             android:id="@+id/addItem_listView_addTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="@dimen/custom_row_margin"
-            android:divider="#00000000"/>
+            android:divider="#00000000"
+            android:dividerHeight="@dimen/custom_row_margin" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,8 +77,8 @@
             android:id="@+id/location_textView_addTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/custom_form_padding"
             android:layout_marginBottom="@dimen/custom_row_margin"
+            android:layout_marginTop="@dimen/custom_form_padding"
             android:text="@string/choose_location"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -86,8 +86,8 @@
             android:id="@+id/addLocation_listView_addTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:dividerHeight="@dimen/custom_row_margin"
-            android:divider="#00000000"/>
+            android:divider="#00000000"
+            android:dividerHeight="@dimen/custom_row_margin" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,8 +104,8 @@
                 android:layout_marginRight="@dimen/custom_row_margin"
                 android:background="#12cdc2"
                 android:contentDescription="@string/add_new_location"
-                android:src="@drawable/ic_action_add_theme"
-                android:onClick="addNewLocation"/>
+                android:onClick="addNewLocation"
+                android:src="@drawable/ic_action_add_theme" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -147,77 +147,23 @@
                     android:inputType="number"
                     android:singleLine="true" />
             </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:id="@+id/expires_date_textView_addTask"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/custom_form_padding"
-                    android:layout_marginRight="@dimen/custom_form_padding"
-                    android:text="@string/expr_date"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <EditText
-                    android:id="@+id/expires_editText_addTask"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:text="@string/expr_date_hint"
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:onClick="showDatePickerDialog"/>
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:id="@+id/repeat_textView_addTask"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:text="@string/repeat"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <RadioGroup
-                    android:id="@+id/repeat_radioGroup_addTask"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/off_radioButton_addTask"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/off" />
-
-                    <RadioButton
-                        android:id="@+id/on_radioButton_addTask"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/on" />
-
-                </RadioGroup>
-            </TableRow>
         </TableLayout>
 
         <TextView
             android:id="@+id/note_textView_addTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/custom_form_padding"
             android:layout_marginBottom="@dimen/custom_row_margin"
+            android:layout_marginTop="@dimen/custom_form_padding"
             android:text="@string/note"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <EditText
             android:id="@+id/note_editText_addTask"
-            android:padding="@dimen/custom_row_margin"
-            android:background="@drawable/square_shape"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/custom_row_margin"/>
+            android:layout_marginBottom="@dimen/custom_row_margin"
+            android:background="@drawable/square_shape"
+            android:padding="@dimen/custom_row_margin" />
     </LinearLayout>
 </ScrollView>
