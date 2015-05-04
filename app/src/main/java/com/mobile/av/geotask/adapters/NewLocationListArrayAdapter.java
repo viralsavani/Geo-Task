@@ -2,6 +2,8 @@ package com.mobile.av.geotask.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by VIRAL on 4/29/2015.
@@ -22,26 +26,28 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
     private ArrayList<LatLng> locationList;
     private NewLocationListener newLocationListenerCallback;
     private MapFragmentListener mapFragmentListenerCallback;
+    private Context context;
 
 
     public NewLocationListArrayAdapter(Context context, int resource, ArrayList<LatLng> locationList) {
         super(context, resource, locationList);
         this.locationList = locationList;
+        this.context = context;
     }
 
-    public interface NewLocationListener{
+    public interface NewLocationListener {
         void removeLocation(int position);
     }
 
-    public interface MapFragmentListener{
+    public interface MapFragmentListener {
         void addLocation(int position);
     }
 
-    public void setNewLocationListener(NewLocationListener newLocationListenerCallback){
+    public void setNewLocationListener(NewLocationListener newLocationListenerCallback) {
         this.newLocationListenerCallback = newLocationListenerCallback;
     }
 
-    public void setMapFragmentListener(MapFragmentListener mapFragmentListenerCallback){
+    public void setMapFragmentListener(MapFragmentListener mapFragmentListenerCallback) {
         this.mapFragmentListenerCallback = mapFragmentListenerCallback;
     }
 
@@ -56,7 +62,14 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
         locationTextView.setOnClickListener(textViewOnClickListener);
 
         if (locationList.get(position).latitude != 0 && locationList.get(position).longitude != 0) {
-            locationTextView.setText(locationList.get(position).toString());
+            Geocoder geocoder = new Geocoder(context);
+            try {
+                List<Address> address = geocoder
+                        .getFromLocation(locationList.get(position).latitude, locationList.get(position).longitude, 1);
+                locationTextView.setText(address.get(0).getAddressLine(0));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         // Handle location removeImageButton
@@ -71,10 +84,10 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
     /**
      * OnClickListener for removeImageButton
      */
-    private class RemoveOnClickListener implements View.OnClickListener{
+    private class RemoveOnClickListener implements View.OnClickListener {
         private int position;
 
-        private RemoveOnClickListener(int position){
+        private RemoveOnClickListener(int position) {
             this.position = position;
         }
 
@@ -87,11 +100,11 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
     /**
      * OnClickListener or LocationTextView
      */
-    private class LocationTextViewOnClickListener implements View.OnClickListener{
+    private class LocationTextViewOnClickListener implements View.OnClickListener {
 
         private int position;
 
-        private LocationTextViewOnClickListener(int position){
+        private LocationTextViewOnClickListener(int position) {
             this.position = position;
         }
 
@@ -100,10 +113,4 @@ public class NewLocationListArrayAdapter extends ArrayAdapter<LatLng> {
             mapFragmentListenerCallback.addLocation(position);
         }
     }
-
-    // Method to return saved location list
-    public ArrayList<LatLng> getLocationList(){
-        return locationList;
-    }
-
 }

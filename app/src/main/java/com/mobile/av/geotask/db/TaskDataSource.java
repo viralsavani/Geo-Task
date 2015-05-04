@@ -74,12 +74,12 @@ public class TaskDataSource {
 
                 String locationString = cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_LOCATION));
                 String[] split = locationString.split(";");
-                  for (String string : split){
-                      if(string.length() > 1) {
-                          String[] latLong = string.split(",");
-                          locationList.add(new LatLng(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1])));
-                      }
-                  }
+                for (String string : split) {
+                    if (string.length() > 1) {
+                        String[] latLong = string.split(",");
+                        locationList.add(new LatLng(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1])));
+                    }
+                }
                 task.setLocation(locationList);
 
                 tasks.add(task);
@@ -93,40 +93,44 @@ public class TaskDataSource {
     insert all data ------------- TEST TO INSERT DATA INTO DATABASE
      */
     public void setAllData(List<Task> tasks) {
-        ContentValues values;
         for (Task task : tasks) {
+            setAllData(task);
+        }
+    }
+
+    public void setAllData(Task task) {
+        ContentValues values = new ContentValues();
+
+        values.put(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
+        values.put(TaskDBOpenHelper.TASK_RANGE, task.getRange());
+
+        ArrayList<LatLng> latLngs = task.getLocation();
+        StringBuilder sb = new StringBuilder();
+        for (LatLng latLng : latLngs) {
+            sb.append(latLng.latitude + ",");
+            sb.append(latLng.longitude + ";");
+        }
+        values.put(TaskDBOpenHelper.TASK_LOCATION, sb.toString());
+        values.put(TaskDBOpenHelper.TASK_NOTE, task.getNote());
+
+        long insertID = taskDB.insert(TaskDBOpenHelper.TASK_TABLE_NAME, null, values);
+
+        ArrayList<Item> items = task.getItems();
+        for (Item item : items) {
             values = new ContentValues();
 
-            values.put(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
-            values.put(TaskDBOpenHelper.TASK_RANGE, task.getRange());
+            values.put(TaskDBOpenHelper.TASK_ID, insertID);
+            values.put(TaskDBOpenHelper.ITEMS_STATUS, item.getStatus());
+            values.put(TaskDBOpenHelper.ITEMS_NAME, item.getName());
 
-            ArrayList<LatLng> latLngs = task.getLocation();
-            StringBuilder sb = new StringBuilder();
-            for (LatLng latLng : latLngs) {
-                sb.append(latLng.latitude + ",");
-                sb.append(latLng.longitude + ";");
-            }
-            values.put(TaskDBOpenHelper.TASK_LOCATION, sb.toString());
-
-            long insertID = taskDB.insert(TaskDBOpenHelper.TASK_TABLE_NAME, null, values);
-
-            ArrayList<Item> items = task.getItems();
-            for(Item item: items) {
-                values = new ContentValues();
-
-                values.put(TaskDBOpenHelper.TASK_ID, insertID);
-                values.put(TaskDBOpenHelper.ITEMS_STATUS, item.getStatus());
-                values.put(TaskDBOpenHelper.ITEMS_NAME, item.getName());
-
-                taskDB.insert(TaskDBOpenHelper.ITEMS_TABLE_NAME, null, values);
-            }
+            taskDB.insert(TaskDBOpenHelper.ITEMS_TABLE_NAME, null, values);
         }
     }
 
     /*
     Remove Task from Both Tables
      */
-    public void deleteTask(int taskId){
+    public void deleteTask(int taskId) {
         taskDB.delete(TaskDBOpenHelper.TASK_TABLE_NAME,
                 TaskDBOpenHelper.TASK_ID + " = ? ",
                 new String[]{String.valueOf(taskId)});
@@ -139,20 +143,21 @@ public class TaskDataSource {
 
     /**
      * Retrieves all the items of specified task.
+     *
      * @param taskId
      */
-    public ArrayList<Item> getItemsForTask(int taskId){
+    public ArrayList<Item> getItemsForTask(int taskId) {
         Cursor cursor = taskDB.query(TaskDBOpenHelper.ITEMS_TABLE_NAME,
-                                        items_All_Column,
-                                        TaskDBOpenHelper.TASK_ID + " = ?" ,
-                                        new String[] {String.valueOf(taskId)},
-                                        null, null, null);
+                items_All_Column,
+                TaskDBOpenHelper.TASK_ID + " = ?",
+                new String[]{String.valueOf(taskId)},
+                null, null, null);
 
         ArrayList<Item> itemList = new ArrayList<>();
 
-        if (cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             Item item;
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 item = new Item();
                 item.setItem_id(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.ITEMS_ID)));
                 item.setStatus(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.ITEMS_STATUS)));

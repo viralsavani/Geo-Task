@@ -1,12 +1,14 @@
 package com.mobile.av.geotask;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -20,9 +22,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -31,11 +38,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class MapActivity extends ActionBarActivity implements
-        GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
+        GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener, GoogleApiClient.ConnectionCallbacks {
 
     public static final String LATLNG_OF_LOCATION = "latlng_of_selection";
-    private int indexInLocationList;
+    private static final int GPS_ERROR_DIALOG_REQUEST = 1000;
 
+    private String adminArea = "";
+    private int indexInLocationList;
+    private Location lastKnownLocation;
+    private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private TextView searchTextView;
     private ImageButton searchButton;
@@ -57,56 +68,96 @@ public class MapActivity extends ActionBarActivity implements
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setElevation(10);
 
-        // Index of location in LocationList in parent Activity
-        indexInLocationList = getIntent().getExtras().getInt(TaskAddActivity.INDEX_IN_LOCATION_LIST);
+        if (googleServiceCheck()) {
+            if (isMap()) {
+                buildGoogleApiClient();
+                // Index of location in LocationList in parent Activity
+                indexInLocationList = getIntent().getExtras().getInt(TaskAddActivity.INDEX_IN_LOCATION_LIST);
 
-        searchTextView = (TextView) findViewById(R.id.search_textView_addLocation);
-        searchButton = (ImageButton) findViewById(R.id.search_imageButton_addLocation);
+                searchTextView = (TextView) findViewById(R.id.search_textView_addLocation);
+                searchButton = (ImageButton) findViewById(R.id.search_imageButton_addLocation);
 
-        // Handle onClick for search button
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String address = searchTextView.getText().toString();
+                // Handle onClick for search button
+                searchButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String address = searchTextView.getText().toString() + "," + adminArea;
 
-                // Hide keyboard when user clicks search button
-                InputMethodManager inputMethodManager = (InputMethodManager) getApplicationContext().getSystemService(
-                        Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(searchTextView.getWindowToken(), 0);
+                        // Hide keyboard when user clicks search button
+                        InputMethodManager inputMethodManager = (InputMethodManager) getApplicationContext().getSystemService(
+                                Context.INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(searchTextView.getWindowToken(), 0);
 
-                if (address != null) {
-                    new GeoCoderTask().execute(address);
-                }
-            }
-        });
+                        if (address != null) {
+                            new GeoCoderTask().execute(address);
+                        }
+                    }
+                });
 
-        setUpMapIfNeeded();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setUpMapIfNeeded();
-    }
-
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                mMap.setOnMapClickListener(this);
-                mMap.setOnMarkerClickListener(this);
-                setUpMap();
             }
         }
     }
 
-    // Initial Condition for map => Go to current location
-    private void setUpMap() {
+    /*
+     Method to check whether google service is available or not
+     Important method to make google api project robust
+      */
+    public boolean googleServiceCheck() {
+        int isServiceAvailable = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 
+        if (isServiceAvailable == ConnectionResult.SUCCESS) {
+            return true;
+        } else if (GooglePlayServicesUtil.isUserRecoverableError(isServiceAvailable)) {
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(isServiceAvailable, this, GPS_ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(this, "Can't connect to Google Play Service", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    private boolean isMap() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap == null) {
+            // Try to obtain the map from the MapFragment.
+            mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            // Check if we were successful in obtaining the map.
+            if (mMap != null) {
+                mMap.setOnMapClickListener(this);
+                mMap.setOnMarkerClickListener(this);
+            }
+        }
+
+        return (mMap != null);
+    }
+
+    // Initial Condition for map => Go to current location
+    private void setUpMap() throws IOException {
+        // Get last location which means current location
+        lastKnownLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
+        if (lastKnownLocation != null) {
+            // shift view to current location
+            LatLng latlng = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+            Geocoder geocoder = new Geocoder(this);
+            adminArea = geocoder.getFromLocation(latlng.latitude, latlng.longitude, 1).get(0).getAdminArea();
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latlng, 12);
+            mMap.moveCamera(update);
+        } else {
+            Toast.makeText(this, "Current Location is not Available", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /*
+   Building GoogleApiClient
+    */
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+
+        mGoogleApiClient.connect();
     }
 
     @Override
@@ -196,6 +247,20 @@ public class MapActivity extends ActionBarActivity implements
         return true;
     }
 
+    @Override
+    public void onConnected(Bundle bundle) {
+        try {
+            setUpMap();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
     /**
      * AsyncTask to get the perform geoCoding and add marker on map for given search string
      * in locationName.
@@ -219,10 +284,10 @@ public class MapActivity extends ActionBarActivity implements
 
         @Override
         protected void onPostExecute(List<Address> addresses) {
-
             if (addresses == null || addresses.size() == 0) {
                 Toast.makeText(getBaseContext(), "No Location found", Toast.LENGTH_SHORT).show();
             } else {
+                int zoom = addresses.size() < 5 ? 10 : 8;
                 // Clears all the existing markers on the map
                 mMap.clear();
 
@@ -236,16 +301,11 @@ public class MapActivity extends ActionBarActivity implements
 
                     // Locate the first location
                     if (i == 0) {
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                                new LatLng(addresses.get(i).getLatitude(),
-                                        addresses.get(i).getLongitude()),
-                                10f));
+                        mMap.animateCamera(CameraUpdateFactory.zoomTo(zoom));
                     }
                     mMap.addMarker(getMarkerOptions(addresses.get(i)));
                 }
             }
         }
     }
-
-
 }
