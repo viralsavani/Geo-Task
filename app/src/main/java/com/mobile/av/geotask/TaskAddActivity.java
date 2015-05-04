@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -22,18 +20,12 @@ import com.mobile.av.geotask.adapters.NewLocationListArrayAdapter;
 import com.mobile.av.geotask.helper.ListResize;
 import com.mobile.av.geotask.model.Item;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 
 public class TaskAddActivity extends ActionBarActivity implements NewItemListArrayAdapter.Listener,
-        DatePickerFragment.DatePickerListener, NewLocationListArrayAdapter.NewLocationListener,
-        NewLocationListArrayAdapter.MapFragmentListener{
+        NewLocationListArrayAdapter.NewLocationListener,
+        NewLocationListArrayAdapter.MapFragmentListener {
 
     public static final String INDEX_IN_LOCATION_LIST = "indexInLocationList";
 
@@ -45,7 +37,6 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
     NewLocationListArrayAdapter locationListArrayAdapter;
     ListView itemListView;
     ListView locationListView;
-    EditText expirationDate;
 
 
     private static final int MAP_INTENT_GET_MSG = 1;
@@ -60,9 +51,6 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setElevation(10);
-
-        // Initialize editText for expiration date
-        expirationDate = (EditText) findViewById(R.id.expires_editText_addTask);
 
         // ItemList handlers
         itemList = new ArrayList<>();
@@ -103,8 +91,8 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
     /**
      * Method to add new location
      */
-    public void addNewLocation(View v){
-        location = new LatLng(0,0);
+    public void addNewLocation(View v) {
+        location = new LatLng(0, 0);
         locationList.add(location);
         locationListArrayAdapter.notifyDataSetChanged();
         ListResize.setListViewHeightBasedOnChildren(locationListView);
@@ -120,31 +108,6 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         ListResize.setListViewHeightBasedOnChildren(locationListView);
     }
 
-    /**
-     * Show DatePickerDialog when user clicks on Expiration date editText
-     */
-    public void showDatePickerDialog(View v){
-        Bundle dateBundle = new Bundle();
-
-        // If the date is selected then date dialog opens with that date else
-        // with current date.
-        if(expirationDate.getText().toString().equals("mm-dd-yyyy")){
-            final Calendar c = Calendar.getInstance();
-            dateBundle.putInt("month", c.get(Calendar.YEAR));
-            dateBundle.putInt("day", c.get(Calendar.MONTH));
-            dateBundle.putInt("year", c.get(Calendar.DAY_OF_MONTH));
-        }else{
-            String date[] = expirationDate.getText().toString().split("-");
-            dateBundle.putInt("month", Integer.parseInt(date[0]));
-            dateBundle.putInt("day", Integer.parseInt(date[1]));
-            dateBundle.putInt("year", Integer.parseInt(date[2]));
-        }
-
-        DatePickerFragment datePickerFragment = new DatePickerFragment();
-        datePickerFragment.setDatePickerListener(this);
-        datePickerFragment.setArguments(dateBundle);
-        datePickerFragment.show(getSupportFragmentManager(), "datePicker");
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -165,15 +128,6 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Callback of DatePicker Fragment.
-     * @param date  String representing date in mm-dd-yyyy form
-     */
-    @Override
-    public void datePickerReturnData(String date) {
-        expirationDate.setText(date);
-    }
-
     @Override
     public void addLocation() {
         Intent mapIntent = new Intent(this, MapActivity.class);
@@ -184,15 +138,15 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case MAP_INTENT_GET_MSG:
-                if(resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     LatLng location = data.getExtras().getParcelable(MapActivity.LATLNG_OF_LOCATION);
                     int locationIndex = data.getIntExtra(TaskAddActivity.INDEX_IN_LOCATION_LIST, -1);
 
-                    if(locationIndex < 0){
+                    if (locationIndex < 0) {
                         Log.e("Geo-Task", "Index to add location in location list is invalid :: -1");
-                    }else{
+                    } else {
                         locationList.add(locationIndex, location);
                         locationListArrayAdapter.notifyDataSetChanged();
                     }

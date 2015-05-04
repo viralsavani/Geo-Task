@@ -18,8 +18,6 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
     public static final String TASK_ID = "task_id";
     public static final String TASK_TITLE = "title";
     public static final String TASK_RANGE = "range";
-    public static final String TASK_EXP_DATE = "expr_date";
-    public static final String TASK_REPEAT = "repeat";
     public static final String TASK_NOTE = "note";
     public static final String TASK_LOCATION = "location";
 
@@ -35,8 +33,6 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
                     TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     TASK_TITLE + " TEXT, " +
                     TASK_RANGE + " NUMERIC, " +
-                    TASK_EXP_DATE + " TEXT, " +
-                    TASK_REPEAT + " INTEGER, " +
                     TASK_NOTE + " TEXT, " +
                     TASK_LOCATION + " TEXT " +
                     ")";
@@ -65,5 +61,8 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
         /*
         Code to handle database when version changes
          */
+        db.execSQL("DROP IF EXISTS " + TASK_TABLE_NAME);
+        db.execSQL("DROP IF EXISTS " + ITEMS_TABLE_NAME);
+        onCreate(db);
     }
 }
