@@ -27,6 +27,7 @@
         android:paddingBottom="@dimen/custom_row_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true" />
 
     <ImageView
@@ -36,6 +37,17 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_discard"/>
+        android:src="@drawable/ic_action_discard"
+        android:contentDescription="@string/remove_task"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setNotification_imageView_task_row_list"
+        android:src="@drawable/ic_action_toggle_off"
+        android:contentDescription="@string/notification"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/discardTask_imageView_task_row_list"
+        android:layout_toStartOf="@+id/discardTask_imageView_task_row_list" />
 
 </RelativeLayout>

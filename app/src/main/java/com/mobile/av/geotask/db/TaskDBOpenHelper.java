@@ -20,6 +20,7 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
     public static final String TASK_RANGE = "range";
     public static final String TASK_NOTE = "note";
     public static final String TASK_LOCATION = "location";
+    public static final String TASK_STATUS = "status";
 
     // ItemList table column constants
     public static final String ITEMS_TABLE_NAME = "items";
@@ -34,7 +35,8 @@ public class TaskDBOpenHelper extends SQLiteOpenHelper {
                     TASK_TITLE + " TEXT, " +
                     TASK_RANGE + " NUMERIC, " +
                     TASK_NOTE + " TEXT, " +
-                    TASK_LOCATION + " TEXT " +
+                    TASK_LOCATION + " TEXT, " +
+                    TASK_STATUS + " INTEGER " +
                     ")";
 
     public static final String ITEMS_TABLE_CREATE =
