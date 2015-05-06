@@ -11,6 +11,7 @@ import com.mobile.av.geotask.model.Item;
 import com.mobile.av.geotask.model.Task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,7 +24,8 @@ public class TaskDataSource {
             TaskDBOpenHelper.TASK_TITLE,
             TaskDBOpenHelper.TASK_RANGE,
             TaskDBOpenHelper.TASK_NOTE,
-            TaskDBOpenHelper.TASK_LOCATION
+            TaskDBOpenHelper.TASK_LOCATION,
+            TaskDBOpenHelper.TASK_STATUS
     };
 
     public static final String[] items_All_Column = {
@@ -81,11 +83,13 @@ public class TaskDataSource {
                     }
                 }
                 task.setLocation(locationList);
+                task.setStatus(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_STATUS)));
 
                 tasks.add(task);
             }
         }
         cursor.close();
+        Collections.reverse(tasks);
         return tasks;
     }
 
@@ -103,6 +107,7 @@ public class TaskDataSource {
 
         values.put(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
         values.put(TaskDBOpenHelper.TASK_RANGE, task.getRange());
+        values.put(TaskDBOpenHelper.TASK_STATUS, task.getStatus());
 
         ArrayList<LatLng> latLngs = task.getLocation();
         StringBuilder sb = new StringBuilder();
