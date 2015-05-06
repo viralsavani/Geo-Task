@@ -43,7 +43,7 @@ public class ItemDetailFragment extends Fragment {
         itemListView = (ListView) taskDetailView.findViewById(R.id.item_listView_taskDetail);
         locationListView = (ListView) taskDetailView.findViewById(R.id.location_listView_taskDetail);
 
-        range.setText(String.valueOf(task.getRange())+" mts");
+        range.setText(" " + String.valueOf(task.getRange()) + " mts");
         notes.setText(task.getNote());
 
         ItemListArrayAdapter itemAdapter = new ItemListArrayAdapter(getActivity(), R.layout.item_detail_fragment, task.getItems());

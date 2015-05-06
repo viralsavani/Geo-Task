@@ -2,22 +2,28 @@ package com.mobile.av.geotask;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.adapters.NewItemListArrayAdapter;
 import com.mobile.av.geotask.adapters.NewLocationListArrayAdapter;
+import com.mobile.av.geotask.db.TaskDataSource;
 import com.mobile.av.geotask.helper.ListResize;
 import com.mobile.av.geotask.model.Item;
+import com.mobile.av.geotask.model.Task;
 
 import java.util.ArrayList;
 
@@ -36,6 +42,9 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
     NewLocationListArrayAdapter locationListArrayAdapter;
     ListView itemListView;
     ListView locationListView;
+    EditText title, note, range;
+    Task task;
+    TaskDataSource taskDataSource;
 
 
     private static final int MAP_INTENT_GET_MSG = 1;
@@ -50,6 +59,13 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setElevation(10);
+
+        title = (EditText) findViewById(R.id.title_editText_addTask);
+        note = (EditText) findViewById(R.id.note_editText_addTask);
+        range = (EditText) findViewById(R.id.range_editText_addTask);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        range.setText(sharedPreferences.getString(PrefsFragment.RANGE_PREF, "500"));
 
         // ItemList handlers
         itemList = new ArrayList<>();
@@ -120,11 +136,40 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
 
         switch (id) {
             case R.id.action_save:
-                // Save the task
+                if (saveTask()) {
+                    task = new Task();
+                    task.setTitle(title.getText().toString());
+                    task.setItems(itemList);
+                    task.setLocation(locationList);
+                    task.setNote(note.getText().toString());
+                    task.setRange(Long.parseLong(range.getText().toString()));
+                    taskDataSource = new TaskDataSource(this);
+                    taskDataSource.open();
+                    taskDataSource.setAllData(task);
+                    taskDataSource.close();
+                    finish();
+                }
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean saveTask() {
+        if (title.getText().toString().trim().equals("")) {
+            Toast.makeText(this, "Enter Task Name", Toast.LENGTH_LONG).show();
+            return false;
+        } else if (locationList.size() == 0) {
+            Toast.makeText(this, "Add at least one location", Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            if (locationList.get(0).longitude == 0 && locationList.get(0).latitude == 0) {
+                Toast.makeText(this, "Add at least one location", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -143,7 +188,7 @@ public class TaskAddActivity extends ActionBarActivity implements NewItemListArr
                     int locationIndex = data.getIntExtra(TaskAddActivity.INDEX_IN_LOCATION_LIST, -1);
 
                     if (locationIndex >= 0) {
-                        locationList.add(locationIndex, location);
+                        locationList.set(locationIndex, location);
                         locationListArrayAdapter.notifyDataSetChanged();
                     }
                 }
