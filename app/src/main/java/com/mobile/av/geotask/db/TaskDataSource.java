@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.model.Item;
@@ -172,5 +173,44 @@ public class TaskDataSource {
         }
         cursor.close();
         return itemList;
+    }
+
+    public Task getTaskFromId(int taskId){
+        Cursor cursor = taskDB.query(TaskDBOpenHelper.TASK_TABLE_NAME,
+                task_All_Column,
+                TaskDBOpenHelper.TASK_ID + " = ?",
+                new String[] {String.valueOf(taskId)},
+                null, null, null);
+
+        Task returnTask = new Task();
+        cursor.moveToNext();
+        returnTask.setTask_id(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_ID)));
+        returnTask.setTitle(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_TITLE)));
+        returnTask.setRange(cursor.getLong(cursor.getColumnIndex(TaskDBOpenHelper.TASK_RANGE)));
+        returnTask.setNote(cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_NOTE)));
+        returnTask.setStatus(cursor.getInt(cursor.getColumnIndex(TaskDBOpenHelper.TASK_STATUS)));
+
+        ArrayList<LatLng> locationList = new ArrayList<>();
+        String locationString = cursor.getString(cursor.getColumnIndex(TaskDBOpenHelper.TASK_LOCATION));
+        String[] split = locationString.split(";");
+        for (String string : split) {
+            if (string.length() > 1) {
+                String[] latLong = string.split(",");
+                locationList.add(new LatLng(Double.parseDouble(latLong[0]), Double.parseDouble(latLong[1])));
+            }
+        }
+        returnTask.setLocation(locationList);
+
+        cursor.close();
+        return returnTask;
+    }
+
+    public void setTaskStatus(int taskId, int newStatus){
+        ContentValues values = new ContentValues();
+        values.put(TaskDBOpenHelper.TASK_STATUS, newStatus);
+        taskDB.update(TaskDBOpenHelper.TASK_TABLE_NAME,
+                values,
+                TaskDBOpenHelper.TASK_ID + " = ?",
+                new String[]{String.valueOf(taskId)});
     }
 }

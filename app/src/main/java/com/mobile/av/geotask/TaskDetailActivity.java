@@ -1,11 +1,13 @@
 package com.mobile.av.geotask;
 
+import android.app.ActivityManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -13,6 +15,8 @@ import com.mobile.av.geotask.adapters.TaskListArrayAdapter;
 import com.mobile.av.geotask.db.TaskDBOpenHelper;
 import com.mobile.av.geotask.db.TaskDataSource;
 import com.mobile.av.geotask.model.Task;
+
+import java.util.List;
 
 import static com.mobile.av.geotask.RemoveTaskDialogFragment.Listener;
 
@@ -38,6 +42,8 @@ public class TaskDetailActivity extends ActionBarActivity implements Listener {
         // Custom Action Bar
         setTitle(Html.fromHtml("<font color='#12cdc2'> " + task.getTitle() + " </font>"));
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setElevation(10);
 

@@ -121,6 +121,7 @@ public class MapActivity extends ActionBarActivity implements
         if (mMap == null) {
             // Try to obtain the map from the MapFragment.
             mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 mMap.setOnMapClickListener(this);

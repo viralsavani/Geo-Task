@@ -2,7 +2,9 @@ package com.mobile.av.geotask.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mobile.av.geotask.GeoFence;
 import com.mobile.av.geotask.R;
 import com.mobile.av.geotask.RemoveTaskDialogFragment;
 import com.mobile.av.geotask.db.TaskDBOpenHelper;
@@ -32,6 +35,8 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
     private Bundle bundle;
     private TaskDataSource taskDataSource;
 
+    ImageView notificationImageView;
+
     public TaskListArrayAdapter(Context context, int resource, List<Task> taskList) {
         super(context, resource, taskList);
         this.context = context;
@@ -43,9 +48,17 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         convertView = layoutInflater.inflate(R.layout.task_list_row, null, true);
 
-        TextView taskTitle = (TextView) convertView.findViewById(R.id.taskTitle_textView_task_row_list);
+        final TextView taskTitle = (TextView) convertView.findViewById(R.id.taskTitle_textView_task_row_list);
         TextView range = (TextView) convertView.findViewById(R.id.range_textView_task_row_list);
         ImageView discardTask = (ImageView) convertView.findViewById(R.id.discardTask_imageView_task_row_list);
+        notificationImageView = (ImageView) convertView.findViewById(R.id.setNotification_imageView_task_row_list);
+
+        // Set the image of notificationToggle as ON
+        if(taskList.get(position).getStatus() != 0){
+            notificationImageView.setImageResource(R.drawable.ic_action_toggle_on);
+        }else {
+            notificationImageView.setImageResource(R.drawable.ic_action_toggle_off);
+        }
 
         taskTitle.setText(taskList.get(position).getTitle());
         range.setText("Range " + String.valueOf(taskList.get(position).getRange()) + " mts");
@@ -54,6 +67,32 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
             @Override
             public void onClick(View v) {
                 showRemoveDialog(position);
+            }
+        });
+
+        notificationImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeoFence geoFence = new GeoFence(getContext(), taskList.get(position), position);
+                taskDataSource = new TaskDataSource(context);
+                if (taskList.get(position).getStatus() == 0) {
+                    taskList.get(position).setStatus(1);
+
+                    taskDataSource.open();
+                    taskDataSource.setTaskStatus(taskList.get(position).getTask_id(), 1);
+                    taskDataSource.close();
+
+                    geoFence.executeGeoFence();
+                }else{
+                    taskList.get(position).setStatus(0);
+
+                    taskDataSource.open();
+                    taskDataSource.setTaskStatus(taskList.get(position).getTask_id(), 0);
+                    taskDataSource.close();
+
+                    geoFence.executeGeoFence();
+                }
+                notifyDataSetChanged();
             }
         });
 
