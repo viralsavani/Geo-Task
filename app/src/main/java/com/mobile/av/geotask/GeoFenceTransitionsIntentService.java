@@ -1,6 +1,7 @@
 package com.mobile.av.geotask;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -96,12 +97,14 @@ public class GeoFenceTransitionsIntentService extends IntentService {
         notificationIntent.putExtra(TaskListArrayAdapter.POSITION, GeoFence.CURRENT_TASK_POSITION);
         notificationIntent.putExtra(".model.Task", currentTask);
 
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getApplicationContext());
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(MainActivity.class);
         stackBuilder.addNextIntent(notificationIntent);
 
-        PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent notificationPendingIntent = stackBuilder.getPendingIntent(
+                currentTask.getTask_id(), PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
                 .setColor(Color.parseColor("#12CDC2"))
