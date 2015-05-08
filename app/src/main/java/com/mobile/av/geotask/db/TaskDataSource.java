@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.mobile.av.geotask.model.Item;
@@ -202,6 +201,8 @@ public class TaskDataSource {
         returnTask.setLocation(locationList);
 
         cursor.close();
+        returnTask.setItems(getItemsForTask(taskId));
+
         return returnTask;
     }
 
@@ -212,5 +213,6 @@ public class TaskDataSource {
                 values,
                 TaskDBOpenHelper.TASK_ID + " = ?",
                 new String[]{String.valueOf(taskId)});
+
     }
 }
